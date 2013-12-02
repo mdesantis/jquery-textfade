@@ -64,7 +64,7 @@ class TextFadeIn
     if options?
       @text = text ? getText @element
     else
-      if $.isPlainObject text
+      if typeof text == 'object'
         @text   = getText @element
         options = text
       else
