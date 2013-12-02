@@ -1,4 +1,4 @@
-###
+###!
 TextFadeIn v 1.0.0
 https://github.com/mdesantis/TextFadeIn
 
