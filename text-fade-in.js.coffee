@@ -79,8 +79,8 @@ class TextFadeIn
 
   run: () ->
     @sequence     ?= randomSequence @text.length
-    # Maintain a reference of the sequence used
-    sequenceClone  = @sequence.slice 0
+    # Use a copy of the sequence used in order to keep the original one
+    sequenceClone  = @sequence[0..]
 
     # New lines are preserved in order to preserve the text structure
     blankText = @text.replace /[^\n]/g, ' '
