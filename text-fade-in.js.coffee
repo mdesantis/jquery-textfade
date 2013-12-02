@@ -24,10 +24,7 @@ class TextFadeIn
 
     a
 
-  randomSequence = (length) ->
-    sequence = []
-    sequence.push(i) for i in [0..length]
-    shuffle sequence
+  randomSequence = (length) -> shuffle [0..length]
 
   replace = (element, text, sequence) ->
     index     = sequence.shift()
