@@ -32,9 +32,9 @@ class TextFadeIn
   replace = (element, text, sequence) ->
     index     = sequence.shift()
     prev_text = getText element
-    character = text.charAt(index)
+    character = text.charAt index
 
-    setText element, "#{prev_text.substr(0, index)}#{character}#{prev_text.substr(index+character.length)}"
+    setText element, "#{prev_text.substr 0, index}#{character}#{prev_text.substr index+character.length}"
 
   # References: Sizzle.getText
   getText = (element) ->
