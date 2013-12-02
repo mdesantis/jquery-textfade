@@ -1,4 +1,4 @@
-###
+###!
 TextFadeIn v 1.0.0
 https://github.com/mdesantis/TextFadeIn
 
@@ -9,6 +9,9 @@ Copyright 2013 Maurizio De Santis
 Released under the MIT license
 https://github.com/mdesantis/TextFadeIn/LICENSE
 ###
+
+# Coffeescript compile command: coffee --compile text-fade-in.coffee
+# Uglify command:               uglifyjs text-fade-in.js --mangle --compress --comments '/!/' --output text-fade-in.min.js
 class TextFadeIn
 
   BLANK_REPLACE_REGEX = /[^\n]/g
