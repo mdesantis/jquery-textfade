@@ -1,3 +1,14 @@
+###
+TextFadeIn v 1.0.0
+https://github.com/mdesantis/TextFadeIn
+
+Includes parts of Sizzle.js
+http://sizzlejs.com/
+
+Copyright 2013 Maurizio De Santis
+Released under the MIT license
+https://github.com/mdesantis/TextFadeIn/LICENSE
+###
 class TextFadeIn
 
   `
@@ -11,44 +22,72 @@ class TextFadeIn
     sequence.push(i) for i in [0..length]
     shuffle sequence
 
-  replace = ($element, text, sequence) ->
+  replace = (element, text, sequence) ->
     index     = sequence.shift()
-    prev_text = $element.text()
+    prev_text = getText element
     character = text.charAt(index)
 
-    $element.text "#{prev_text.substr(0, index)}#{character}#{prev_text.substr(index+character.length)}"
+    setText element, "#{prev_text.substr(0, index)}#{character}#{prev_text.substr(index+character.length)}"
 
-  step = ($element, text, sequence, threads, interval) ->
+  # References: Sizzle.getText
+  getText = (element) ->
+    text     = ''
+    nodeType = element.nodeType
+
+    unless nodeType
+      text += getText node for node in element
+    else if nodeType == 1 or nodeType == 9 or nodeType == 11
+      if typeof element.textContent == 'string'
+        return element.textContent
+      else
+        if element = element.firstChild
+          text += getText element
+          text += getText element while element = element.nextSibling
+    else if nodeType == 3 or nodeType == 4
+      return element.nodeValue
+
+    text
+
+  setText = (element, value) ->
+    element.removeChild element.lastChild while element.hasChildNodes()
+    element.appendChild element.ownerDocument.createTextNode value
+
+  step = (element, text, sequence, threads, interval, complete) ->
     for i in [1..threads]
       if sequence.length == 0
         window.clearInterval interval
+        complete?()
         return true
-      replace $element, text, sequence
+      replace element, text, sequence
 
-  constructor: (@$element, text, options) ->
+  constructor: (@element, text, options) ->
     if options?
-      @text = text ? @$element.text()
+      @text = text ? getText @element
     else
       if $.isPlainObject text
-        @text   = @$element.text()
+        @text   = getText @element
         options = text
       else
-        @text    = text ? @$element.text()
+        @text    = text ? getText @element
         options  = {}
 
     @milliseconds  = options['milliseconds'] ? 1
     @threads       = options['threads']      ? 1
     @sequence      = options['sequence']
+    @start         = options['start']
+    @complete      = options['complete']
 
   run: () ->
     @sequence     ?= randomSequence @text.length
-    sequenceClone  = @sequence.slice 0           # needed in order to maintain a reference of the sequence used
+    # Maintain a reference of the sequence used
+    sequenceClone  = @sequence.slice 0
 
+    # New lines are preserved in order to preserve the text structure
     blankText = @text.replace /[^\n]/g, ' '
-    @$element.text blankText
+    setText @element, blankText
 
     interval = window.setInterval =>
-      step @$element, @text, sequenceClone, @threads, interval
+      step @element, @text, sequenceClone, @threads, interval, @complete
     , @milliseconds
 
     true
