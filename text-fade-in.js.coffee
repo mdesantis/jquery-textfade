@@ -13,12 +13,17 @@ class TextFadeIn
 
   BLANK_REPLACE_REGEX = /[^\n]/g
 
-  `
-  var shuffle = function(a) {
-    for(var j, x, i = a.length; i; j = Math.floor(Math.random() * i), x = a[--i], a[i] = a[j], a[j] = x);
-    return a;
-  }
-  `
+  shuffle = (a) ->
+    i = a.length
+
+    while i
+      j = Math.floor Math.random()*i
+      x = a[--i]
+      a[i] = a[j]
+      a[j] = x
+
+    a
+
   randomSequence = (length) ->
     sequence = []
     sequence.push(i) for i in [0..length]
