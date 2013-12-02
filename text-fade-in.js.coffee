@@ -11,6 +11,8 @@ https://github.com/mdesantis/TextFadeIn/LICENSE
 ###
 class TextFadeIn
 
+  BLANK_REPLACE_REGEX = /[^\n]/g
+
   `
   var shuffle = function(a) {
     for(var j, x, i = a.length; i; j = Math.floor(Math.random() * i), x = a[--i], a[i] = a[j], a[j] = x);
@@ -83,7 +85,7 @@ class TextFadeIn
     sequenceClone  = @sequence[0..]
 
     # New lines are preserved in order to preserve the text structure
-    blankText = @text.replace /[^\n]/g, ' '
+    blankText = @text.replace BLANK_REPLACE_REGEX, ' '
     setText @element, blankText
 
     interval = window.setInterval =>
