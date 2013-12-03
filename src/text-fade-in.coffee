@@ -40,8 +40,7 @@ class TextFadeIn
     for i in [1..threads]
       if sequence.length == 0
         window.clearInterval interval
-        complete?()
-        return true
+        return complete?()
       replace $element, text, sequence
 
   constructor: (@$element, text, options) ->
@@ -73,7 +72,5 @@ class TextFadeIn
     interval = window.setInterval =>
       step @$element, @text, sequenceClone, @threads, interval, @complete
     , @milliseconds
-
-    true
 
 window.TextFadeIn = TextFadeIn
