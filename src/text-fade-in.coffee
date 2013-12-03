@@ -29,19 +29,19 @@ class TextFadeIn
 
   randomSequence = (length) -> shuffle [0..length]
 
-  replace = ($element, text, sequence) ->
+  _replace: (sequence) ->
     index     = sequence.shift()
-    prev_text = $element.text()
-    character = text.charAt index
+    prev_text = @$element.text()
+    character = @text.charAt index
 
-    $element.text "#{prev_text.substr 0, index}#{character}#{prev_text.substr index+character.length}"
+    @$element.text "#{prev_text.substr 0, index}#{character}#{prev_text.substr index+character.length}"
 
-  step = ($element, text, sequence, threads, interval, complete) ->
-    for i in [1..threads]
+  _step: (sequence) ->
+    for i in [1..@threads]
       if sequence.length == 0
-        window.clearInterval interval
-        return complete?()
-      replace $element, text, sequence
+        window.clearInterval @interval
+        return @complete?()
+      @_replace sequence
 
   constructor: (@$element, text, options) ->
     if options?
@@ -67,8 +67,8 @@ class TextFadeIn
     blankText = @text.replace BLANK_REPLACE_REGEX, ' '
     @$element.text blankText
 
-    interval = window.setInterval =>
-      step @$element, @text, sequenceClone, @threads, interval, @complete
+    @interval = window.setInterval =>
+      @_step sequenceClone
     , @milliseconds
 
 $.fn.textFadeIn = (text, options) ->
