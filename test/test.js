@@ -8,11 +8,4 @@ $(document).ready(function() {
     'milliseconds': 10,
     'threads': 3
   });
-  // new window.TextFadeIn($('#test2'), contents, { 'milliseconds': 1  }).run();
-  // new window.TextFadeIn($('#test3'), contents, { 'milliseconds': 10 }).run();
-  // new window.TextFadeIn($('#test4'), contents, { 'threads':      3  }).run();
-  // new window.TextFadeIn($('#test5'), contents, {
-  //   'milliseconds': 10,
-  //   'threads': 3
-  // }).run();
 });
