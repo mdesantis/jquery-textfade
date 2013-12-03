@@ -37,10 +37,10 @@ class TextFadeIn
     @$element.text "#{prev_text.substr 0, index}#{character}#{prev_text.substr index+character.length}"
 
   _step: (sequence) ->
-    for i in [1..@threads]
+    for i in [1..@settings.threads]
       if sequence.length == 0
         window.clearInterval @interval
-        return @complete?()
+        return @settings.complete?()
       @_replace sequence
 
   constructor: (@$element, text, options) ->
@@ -54,14 +54,19 @@ class TextFadeIn
         @text    = text ? @$element.text()
         options  = {}
 
-    @milliseconds  = options['milliseconds'] ? 1
-    @threads       = options['threads']      ? 1
-    @sequence      = options['sequence']
-    @start         = options['start']
-    @complete      = options['complete']
-    @sequence     ?= randomSequence @text.length
+    @settings = $.extend
+      'milliseconds': 1
+      'threads':      1
+      'sequence':     null
+      'start':        null
+      'complete':     null
+    , options
+
+    # Not used at the moment
+    # @start         = settings['start']
+    @settings.sequence ?= randomSequence @text.length
     # Use a copy of the sequence used in order to keep the original one
-    sequenceClone  = @sequence[0..]
+    sequenceClone       = @settings.sequence[0..]
 
     # New lines are preserved in order to preserve the text structure
     blankText = @text.replace BLANK_REPLACE_REGEX, ' '
@@ -69,9 +74,8 @@ class TextFadeIn
 
     @interval = window.setInterval =>
       @_step sequenceClone
-    , @milliseconds
+    , @settings.milliseconds
 
 $.fn.textFadeIn = (text, options) ->
   @.each ->
     new TextFadeIn $(@), text, options
-    true
