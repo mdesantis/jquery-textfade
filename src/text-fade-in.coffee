@@ -15,7 +15,6 @@ https://github.com/mdesantis/TextFadeIn/LICENSE
 class TextFadeIn
 
   BLANK_REPLACE_REGEX = /[^\n]/g
-  asd = 'ciao'
 
   shuffle = (a) ->
     i = a.length
