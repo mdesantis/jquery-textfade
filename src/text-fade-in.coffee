@@ -59,8 +59,6 @@ class TextFadeIn
     @sequence      = options['sequence']
     @start         = options['start']
     @complete      = options['complete']
-
-  run: () ->
     @sequence     ?= randomSequence @text.length
     # Use a copy of the sequence used in order to keep the original one
     sequenceClone  = @sequence[0..]
@@ -75,5 +73,5 @@ class TextFadeIn
 
 $.fn.textFadeIn = (text, options) ->
   @.each ->
-    new TextFadeIn($(@), text, options).run()
+    new TextFadeIn $(@), text, options
     true
