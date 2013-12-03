@@ -10,11 +10,12 @@ Released under the MIT license
 https://github.com/mdesantis/TextFadeIn/LICENSE
 ###
 
-# Coffeescript compile command: coffee --compile text-fade-in.coffee
-# Uglify command:               uglifyjs text-fade-in.js --mangle --compress --comments '/!/' --output text-fade-in.min.js
+# Coffeescript compile command: coffee --compile --output lib/ src/
+# Uglify command:               uglifyjs lib/text-fade-in.js --mangle --compress --comments '/!/' --output lib/text-fade-in.min.js
 class TextFadeIn
 
   BLANK_REPLACE_REGEX = /[^\n]/g
+  asd = 'ciao'
 
   shuffle = (a) ->
     i = a.length
