@@ -2,9 +2,6 @@
 TextFadeIn v 1.0.0
 https://github.com/mdesantis/TextFadeIn
 
-Includes parts of Sizzle.js
-http://sizzlejs.com/
-
 Copyright 2013 Maurizio De Santis
 Released under the MIT license
 https://github.com/mdesantis/TextFadeIn/LICENSE
@@ -12,6 +9,9 @@ https://github.com/mdesantis/TextFadeIn/LICENSE
 
 # Coffeescript compile command: coffee --compile --output lib/ src/
 # Uglify command:               uglifyjs lib/text-fade-in.js --mangle --compress --comments '/!/' --output lib/text-fade-in.min.js
+
+$ = window.jQuery
+
 class TextFadeIn
 
   BLANK_REPLACE_REGEX = /[^\n]/g
@@ -73,4 +73,7 @@ class TextFadeIn
       step @$element, @text, sequenceClone, @threads, interval, @complete
     , @milliseconds
 
-window.TextFadeIn = TextFadeIn
+$.fn.textFadeIn = (text, options) ->
+  @.each ->
+    new TextFadeIn($(@), text, options).run()
+    true
