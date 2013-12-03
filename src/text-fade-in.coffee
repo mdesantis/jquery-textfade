@@ -10,11 +10,12 @@ Released under the MIT license
 https://github.com/mdesantis/TextFadeIn/LICENSE
 ###
 
-# Coffeescript compile command: coffee --compile text-fade-in.coffee
-# Uglify command:               uglifyjs text-fade-in.js --mangle --compress --comments '/!/' --output text-fade-in.min.js
+# Coffeescript compile command: coffee --compile --output lib/ src/
+# Uglify command:               uglifyjs lib/text-fade-in.js --mangle --compress --comments '/!/' --output lib/text-fade-in.min.js
 class TextFadeIn
 
   BLANK_REPLACE_REGEX = /[^\n]/g
+  asd = 'ciao'
 
   shuffle = (a) ->
     i = a.length
@@ -32,9 +33,9 @@ class TextFadeIn
   replace = ($element, text, sequence) ->
     index     = sequence.shift()
     prev_text = $element.text()
-    character = text.charAt(index)
+    character = text.charAt index
 
-    $element.text "#{prev_text.substr(0, index)}#{character}#{prev_text.substr(index+character.length)}"
+    $element.text "#{prev_text.substr 0, index}#{character}#{prev_text.substr index+character.length}"
 
   step = ($element, text, sequence, threads, interval, complete) ->
     for i in [1..threads]
