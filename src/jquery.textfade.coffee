@@ -18,6 +18,9 @@ TextFade = (@$element, action, options) ->
 
   BLANK_REPLACE_REGEX = /[^\n]/g
 
+  capitalize = (string) ->
+    "#{string.charAt(0).toUpperCase()}#{string.slice(1)}"
+
   shuffle = (a) ->
     i = a.length
 
@@ -36,8 +39,6 @@ TextFade = (@$element, action, options) ->
     'milliseconds': 1
     'threads':      1
     'sequence':     null
-    'start':        null
-    'complete':     null
 
   @_replace = (sequence) ->
     index     = sequence.shift()
@@ -46,24 +47,23 @@ TextFade = (@$element, action, options) ->
 
     @$element.text "#{text.substr 0, index}#{character}#{text.substr index+character.length}"
 
-  @_fade = (sequence) ->
+  @_step = (sequence) ->
     for i in [1..@settings.threads]
       if sequence.length == 0
         window.clearInterval @interval
-        return @settings.complete?()
+        @$element.trigger "complete.textFade#{capitalize(action)}"
+        @$element.trigger 'complete.textFade', [action]
+        return
       @_replace sequence
 
   @settings = $.extend defaultSettings(), options
-
-  # Not used at the moment
-  # @start         = settings['start']
 
   text                = @settings.text ?= @$element.text()
   @settings.sequence ?= randomSequence text.length
   # Use a clone of the original sequence in order to keep it unchanged
   sequenceClone       = @settings.sequence[0..]
 
-  # New lines are preserved in order to preserve the text structure
+  # Newlines are preserved in order to preserve the text structure
   blankText = text.replace BLANK_REPLACE_REGEX, ' '
 
   switch action
@@ -77,7 +77,7 @@ TextFade = (@$element, action, options) ->
   @$element.text @begText
 
   @interval = window.setInterval =>
-    @_fade sequenceClone
+    @_step sequenceClone
   , @settings.milliseconds
 
   @
