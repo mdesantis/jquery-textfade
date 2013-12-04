@@ -1,10 +1,10 @@
 ###!
-jQuery.TextFade v 1.0.0
-https://github.com/mdesantis/jQuery.textFade
+jQuery.TextFade v 1.0.0.alpha
+https://github.com/mdesantis/jquery.textfade
 
 Copyright 2013 Maurizio De Santis
 Released under the MIT license
-https://github.com/mdesantis/jQuery.textFade/LICENSE
+https://github.com/mdesantis/jquery.textfade/LICENSE
 ###
 
 # Coffeescript compile command: coffee --compile --output lib/ src/
