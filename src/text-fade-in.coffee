@@ -10,9 +10,11 @@ https://github.com/mdesantis/TextFadeIn/LICENSE
 # Coffeescript compile command: coffee --compile --output lib/ src/
 # Uglify command:               uglifyjs lib/text-fade-in.js --mangle --compress --comments '/!/' --output lib/text-fade-in.min.js
 
+# TODO sequenceTypes: random, ltr_ttb, ltr_btt, trl_ttb, trl_btt
+
 $ = window.jQuery
 
-class TextFadeIn
+TextFadeIn = (@$element, text, options) ->
 
   BLANK_REPLACE_REGEX = /[^\n]/g
 
@@ -36,46 +38,47 @@ class TextFadeIn
     'start':        null
     'complete':     null
 
-  _replace: (sequence) ->
+  @_replace = (sequence) ->
     index     = sequence.shift()
     prev_text = @$element.text()
     character = @text.charAt index
 
     @$element.text "#{prev_text.substr 0, index}#{character}#{prev_text.substr index+character.length}"
 
-  _step: (sequence) ->
+  @_step = (sequence) ->
     for i in [1..@settings.threads]
       if sequence.length == 0
         window.clearInterval @interval
         return @settings.complete?()
       @_replace sequence
 
-  constructor: (@$element, text, options) ->
-    if options?
-      @text = text ? @$element.text()
+  if options?
+    @text = text ? @$element.text()
+  else
+    if $.isPlainObject text
+      @text   = @$element.text()
+      options = text
     else
-      if $.isPlainObject text
-        @text   = @$element.text()
-        options = text
-      else
-        @text    = text ? @$element.text()
-        options  = {}
+      @text    = text ? @$element.text()
+      options  = {}
 
-    @settings = $.extend defaultSettings(), options
+  @settings = $.extend defaultSettings(), options
 
-    # Not used at the moment
-    # @start         = settings['start']
-    @settings.sequence ?= randomSequence @text.length
-    # Use a copy of the sequence used in order to keep the original one
-    sequenceClone       = @settings.sequence[0..]
+  # Not used at the moment
+  # @start         = settings['start']
+  @settings.sequence ?= randomSequence @text.length
+  # Use a copy of the sequence used in order to keep the original one
+  sequenceClone       = @settings.sequence[0..]
 
-    # New lines are preserved in order to preserve the text structure
-    blankText = @text.replace BLANK_REPLACE_REGEX, ' '
-    @$element.text blankText
+  # New lines are preserved in order to preserve the text structure
+  blankText = @text.replace BLANK_REPLACE_REGEX, ' '
+  @$element.text blankText
 
-    @interval = window.setInterval =>
-      @_step sequenceClone
-    , @settings.milliseconds
+  @interval = window.setInterval =>
+    @_step sequenceClone
+  , @settings.milliseconds
+
+  @
 
 $.fn.textFadeIn = (text, options) ->
   @.each ->
