@@ -14,7 +14,7 @@ https://github.com/mdesantis/TextFadeIn/LICENSE
 
 $ = window.jQuery
 
-TextFadeIn = (@$element, text, options) ->
+TextFade = (@$element, action, options) ->
 
   BLANK_REPLACE_REGEX = /[^\n]/g
 
@@ -32,6 +32,7 @@ TextFadeIn = (@$element, text, options) ->
   randomSequence = (length) -> shuffle [0..length]
 
   defaultSettings = ->
+    'text':         null
     'milliseconds': 1
     'threads':      1
     'sequence':     null
@@ -41,7 +42,7 @@ TextFadeIn = (@$element, text, options) ->
   @_replace = (sequence) ->
     index     = sequence.shift()
     prev_text = @$element.text()
-    character = @text.charAt index
+    character = @endText.charAt index
 
     @$element.text "#{prev_text.substr 0, index}#{character}#{prev_text.substr index+character.length}"
 
@@ -52,27 +53,28 @@ TextFadeIn = (@$element, text, options) ->
         return @settings.complete?()
       @_replace sequence
 
-  if options?
-    @text = text ? @$element.text()
-  else
-    if $.isPlainObject text
-      @text   = @$element.text()
-      options = text
-    else
-      @text    = text ? @$element.text()
-      options  = {}
-
   @settings = $.extend defaultSettings(), options
 
   # Not used at the moment
   # @start         = settings['start']
-  @settings.sequence ?= randomSequence @text.length
+
+  text                = @settings.text ?= @$element.text()
+  @settings.sequence ?= randomSequence text.length
   # Use a copy of the sequence used in order to keep the original one
   sequenceClone       = @settings.sequence[0..]
 
   # New lines are preserved in order to preserve the text structure
-  blankText = @text.replace BLANK_REPLACE_REGEX, ' '
-  @$element.text blankText
+  blankText = text.replace BLANK_REPLACE_REGEX, ' '
+
+  switch action
+    when 'in'
+      @begText = blankText
+      @endText = text
+    when 'out'
+      @begText = text
+      @endText = blankText
+
+  @$element.text @begText
 
   @interval = window.setInterval =>
     @_step sequenceClone
@@ -80,6 +82,10 @@ TextFadeIn = (@$element, text, options) ->
 
   @
 
-$.fn.textFadeIn = (text, options) ->
+$.fn.textFadeIn = (options) ->
   @.each ->
-    new TextFadeIn $(@), text, options
+    new TextFade $(@), 'in', options
+
+$.fn.textFadeOut = (options) ->
+  @.each ->
+    new TextFade $(@), 'out', options
