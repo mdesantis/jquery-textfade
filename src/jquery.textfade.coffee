@@ -1,14 +1,14 @@
 ###!
-TextFadeIn v 1.0.0
-https://github.com/mdesantis/TextFadeIn
+jQuery.TextFade v 1.0.0
+https://github.com/mdesantis/jQuery.textFade
 
 Copyright 2013 Maurizio De Santis
 Released under the MIT license
-https://github.com/mdesantis/TextFadeIn/LICENSE
+https://github.com/mdesantis/jQuery.textFade/LICENSE
 ###
 
 # Coffeescript compile command: coffee --compile --output lib/ src/
-# Uglify command:               uglifyjs lib/text-fade-in.js --mangle --compress --comments '/!/' --output lib/text-fade-in.min.js
+# Uglify command:               uglifyjs lib/jquery.textfade.js --mangle --compress --comments '/!/' --output lib/jquery.textfade.min.js
 
 # TODO sequenceTypes: random, ltr_ttb, ltr_btt, trl_ttb, trl_btt
 
@@ -41,12 +41,12 @@ TextFade = (@$element, action, options) ->
 
   @_replace = (sequence) ->
     index     = sequence.shift()
-    prev_text = @$element.text()
+    text      = @$element.text()
     character = @endText.charAt index
 
-    @$element.text "#{prev_text.substr 0, index}#{character}#{prev_text.substr index+character.length}"
+    @$element.text "#{text.substr 0, index}#{character}#{text.substr index+character.length}"
 
-  @_step = (sequence) ->
+  @_fade = (sequence) ->
     for i in [1..@settings.threads]
       if sequence.length == 0
         window.clearInterval @interval
@@ -60,7 +60,7 @@ TextFade = (@$element, action, options) ->
 
   text                = @settings.text ?= @$element.text()
   @settings.sequence ?= randomSequence text.length
-  # Use a copy of the sequence used in order to keep the original one
+  # Use a clone of the original sequence in order to keep it unchanged
   sequenceClone       = @settings.sequence[0..]
 
   # New lines are preserved in order to preserve the text structure
@@ -77,15 +77,16 @@ TextFade = (@$element, action, options) ->
   @$element.text @begText
 
   @interval = window.setInterval =>
-    @_step sequenceClone
+    @_fade sequenceClone
   , @settings.milliseconds
 
   @
 
 $.fn.textFadeIn = (options) ->
-  @.each ->
-    new TextFade $(@), 'in', options
+  @.each -> new TextFade $(@), 'in', options
 
 $.fn.textFadeOut = (options) ->
-  @.each ->
-    new TextFade $(@), 'out', options
+  @.each -> new TextFade $(@), 'out', options
+
+$.fn.textFade = (action, options) ->
+  @.each -> new TextFade $(@), action, options
