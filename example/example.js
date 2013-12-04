@@ -3,6 +3,12 @@ $(document).ready(function() {
   var contents = $('#sample').text()
   
   $('#test1i').textFadeIn({                   'milliseconds': 1  })
+  $('#test1i').on('start.textFade', function(e, action) {
+    console.log(e.type+'.'+e.namespace, e, action)
+  })
+  $('#test1i').on('start.textFadeIn', function(e) {
+    console.log(e.type+'.'+e.namespace, e)
+  })
   $('#test1i').on('complete.textFade', function(e, action) {
     console.log(e.type+'.'+e.namespace, e, action)
   })

@@ -40,6 +40,10 @@ TextFade = (@$element, action, options) ->
     'threads':      1
     'sequence':     null
 
+  @_trigger = (event_type, action) ->
+    @$element.trigger "#{event_type}.textFade#{capitalize(action)}"
+    @$element.trigger "#{event_type}.textFade", [action]
+
   @_replace = (sequence) ->
     index     = sequence.shift()
     text      = @$element.text()
@@ -51,8 +55,7 @@ TextFade = (@$element, action, options) ->
     for i in [1..@settings.threads]
       if sequence.length == 0
         window.clearInterval @interval
-        @$element.trigger "complete.textFade#{capitalize(action)}"
-        @$element.trigger 'complete.textFade', [action]
+        @_trigger 'complete', action
         return
       @_replace sequence
 
@@ -75,6 +78,8 @@ TextFade = (@$element, action, options) ->
       @endText = blankText
 
   @$element.text @begText
+
+  @_trigger 'start', action
 
   @interval = window.setInterval =>
     @_step sequenceClone
