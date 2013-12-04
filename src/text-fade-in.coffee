@@ -29,6 +29,13 @@ class TextFadeIn
 
   randomSequence = (length) -> shuffle [0..length]
 
+  defaultSettings = ->
+    'milliseconds': 1
+    'threads':      1
+    'sequence':     null
+    'start':        null
+    'complete':     null
+
   _replace: (sequence) ->
     index     = sequence.shift()
     prev_text = @$element.text()
@@ -54,13 +61,7 @@ class TextFadeIn
         @text    = text ? @$element.text()
         options  = {}
 
-    @settings = $.extend
-      'milliseconds': 1
-      'threads':      1
-      'sequence':     null
-      'start':        null
-      'complete':     null
-    , options
+    @settings = $.extend defaultSettings(), options
 
     # Not used at the moment
     # @start         = settings['start']
