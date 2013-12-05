@@ -2,7 +2,6 @@ $(document).ready(function() {
 
   var contents = $('#sample').text()
   
-  $('#test1i').textFadeIn({                   'milliseconds': 1  })
   $('#test1i').on('start.textFade', function(e, action) {
     console.log(e.type+'.'+e.namespace, e, action)
   })
@@ -15,6 +14,7 @@ $(document).ready(function() {
   $('#test1i').on('complete.textFadeIn', function(e) {
     console.log(e.type+'.'+e.namespace, e)
   })
+  $('#test1i').textFadeIn({                   'milliseconds': 1  })
   $('#test2i').textFadeIn({ 'text': contents, 'milliseconds': 1  })
   $('#test3i').textFadeIn({ 'text': contents, 'milliseconds': 10 })
   $('#test4i').textFadeIn({ 'text': contents, 'threads':      3  })
