@@ -17,6 +17,10 @@ $ = window.jQuery
 TextFade = (@$element, action, options) ->
 
   BLANK_REPLACE_REGEX = /[^\n]/g
+  SEQUENCES           = 
+    'random':  (text) -> shuffle [0..text.length]
+    'ltr_ttb': (text) -> [0..text.length]
+    # TODO 'ltr_btt': (text) -> $map text.split("\n"), (line) ->
 
   capitalize = (string) ->
     "#{string.charAt(0).toUpperCase()}#{string.slice(1)}"
@@ -32,13 +36,11 @@ TextFade = (@$element, action, options) ->
 
     a
 
-  randomSequence = (length) -> shuffle [0..length]
-
   defaultSettings = ->
     'text':         null
     'milliseconds': 1
     'threads':      1
-    'sequence':     null
+    'sequence':     'random'
 
   @_trigger = (event_type, action) ->
     @$element.trigger "#{event_type}.textFade#{capitalize(action)}"
@@ -61,10 +63,17 @@ TextFade = (@$element, action, options) ->
 
   @settings = $.extend defaultSettings(), options
 
-  text                = @settings.text ?= @$element.text()
-  @settings.sequence ?= randomSequence text.length
-  # Use a clone of the original sequence in order to keep it unchanged
-  sequenceClone       = @settings.sequence[0..]
+  text = @settings.text ?= @$element.text()
+
+  if typeof @settings.sequence == 'string'
+    @settings.sequence = SEQUENCES[@settings.sequence] text
+  else if $.isFunction @settings.sequence
+    @settings.sequence = @settings.sequence text
+  else
+    # Assert @settings.sequence to be an array; leave it unchanged
+
+  # Use a clone of @settings.sequence in order to keep it unchanged
+  sequenceClone = @settings.sequence[0..]
 
   # Newlines are preserved in order to preserve the text structure
   blankText = text.replace BLANK_REPLACE_REGEX, ' '
