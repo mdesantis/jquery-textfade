@@ -32,6 +32,17 @@ TextFade = (@$element, action, options) ->
         times line.length, () -> seqi.push c++
       
       seq.reverse().reduce (a, b) -> a.concat b
+    'rtl_ttb' : (text) ->
+      seq = []
+      c   = 0
+
+      lines = text.match LINES_SPLIT_REGEX
+
+      for line, i in lines
+        seqi = seq[i] = []
+        times line.length, () -> seqi.unshift c++
+      
+      seq.reduce (a, b) -> a.concat b
 
   capitalize = (string) ->
     "#{string.charAt(0).toUpperCase()}#{string.slice(1)}"

@@ -1,3 +1,13 @@
+/*
+
+abcd\nefg\nhijk
+\ndcba
+\ngfe
+kjih
+
+
+*/
+
 var text = "abcd\nefg\n\nhijk\n"
 var lines = text.match(/.+\n?|\n/g)
 

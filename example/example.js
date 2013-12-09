@@ -24,6 +24,7 @@ $(document).ready(function() {
   })
   $('#test6i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_ttb' })
   $('#test7i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_btt' })
+  $('#test8i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_ttb' })
 
   $('#test1o').textFadeOut({                   'milliseconds': 10                        })
   $('#test2o').textFadeOut({ 'text': contents, 'milliseconds': 10                        })
@@ -35,5 +36,6 @@ $(document).ready(function() {
   })
   $('#test6o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_ttb' })
   $('#test7o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_btt' })
+  $('#test8o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_ttb' })
 
 })
