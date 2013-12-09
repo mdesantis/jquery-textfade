@@ -22,27 +22,28 @@ TextFade = (@$element, action, options) ->
     'random'  : (text) -> shuffle times text.length
     'ltr_ttb' : (text) -> times text.length
     'ltr_btt' : (text) ->
-      seq = []
-      c   = 0
-
-      lines = text.match LINES_SPLIT_REGEX
-
-      for line, i in lines
-        seqi = seq[i] = []
-        times line.length, () -> seqi.push c++
-      
-      seq.reverse().reduce (a, b) -> a.concat b
+      sequence = textToSequence text, (seqi, c) -> seqi.push c
+      sequence.reverse().reduce (a, b) -> a.concat b
     'rtl_ttb' : (text) ->
-      seq = []
-      c   = 0
+      sequence = textToSequence text, (seqi, c) -> seqi.unshift c
+      sequence.reduce (a, b) -> a.concat b
+    'rtl_btt' : (text) ->
+      sequence = textToSequence text, (seqi, c) -> seqi.unshift c
+      sequence.reverse().reduce (a, b) -> a.concat b
 
-      lines = text.match LINES_SPLIT_REGEX
+  textToSequence = (text, eachLineSequence) ->
+    sequence = []
+    count    = 0
 
-      for line, i in lines
-        seqi = seq[i] = []
-        times line.length, () -> seqi.unshift c++
-      
-      seq.reduce (a, b) -> a.concat b
+    lines = text.match LINES_SPLIT_REGEX
+
+    for line, i in lines
+      lineSequence = sequence[i] = []
+      times line.length, () ->
+        eachLineSequence lineSequence, count
+        count++
+
+    sequence
 
   capitalize = (string) ->
     "#{string.charAt(0).toUpperCase()}#{string.slice(1)}"
