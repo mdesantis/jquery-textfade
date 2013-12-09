@@ -19,21 +19,28 @@ TextFade = (@$element, action, options) ->
   BLANK_REPLACE_REGEX = /[^\n]/g
   LINES_SPLIT_REGEX   = /.+\n?|\n/g
   SEQUENCES           = 
-    'random':  (text) -> shuffle [0...text.length]
-    'ltr_ttb': (text) ->
+    'random'  : (text) -> shuffle times text.length
+    'ltr_ttb' : (text) -> [0...text.length]
+    'ltr_btt' : (text) ->
       seq = []
-      c = 0
+      c   = 0
 
       lines = text.match LINES_SPLIT_REGEX
 
       for line, i in lines
         seqi = seq[i] = []
-        seqi.push c++ for j in [0...line.length]
+        times line.length, () -> seqi.push c++
       
       seq.reverse().reduce (a, b) -> a.concat b
 
   capitalize = (string) ->
     "#{string.charAt(0).toUpperCase()}#{string.slice(1)}"
+
+  times = (n, fn) ->
+    i   = 0
+    fn ?= (i) -> i
+
+    fn i++ while i < n
 
   shuffle = (array) ->
     i = array.length
@@ -47,10 +54,10 @@ TextFade = (@$element, action, options) ->
     array
 
   defaultSettings = ->
-    'text':         null
-    'milliseconds': 1
-    'threads':      1
-    'sequence':     'random'
+    'text'         : null
+    'milliseconds' : 1
+    'threads'      : 1
+    'sequence'     : 'random'
 
   @_trigger = (event_type, action) ->
     @$element.trigger "#{event_type}.textFade#{capitalize(action)}"
@@ -64,7 +71,7 @@ TextFade = (@$element, action, options) ->
     @$element.text "#{text.substr 0, index}#{character}#{text.substr index+character.length}"
 
   @_step = (sequence) ->
-    for i in [1..@settings.threads]
+    times @settings.threads, () =>
       if sequence.length == 0
         window.clearInterval @interval
         @_trigger 'complete', action
@@ -79,8 +86,7 @@ TextFade = (@$element, action, options) ->
     @settings.sequence = SEQUENCES[@settings.sequence] text
   else if $.isFunction @settings.sequence
     @settings.sequence = @settings.sequence text
-  else
-    # Assert @settings.sequence to be an array; leave it unchanged
+  # else assert @settings.sequence to be an array; leave it unchanged
 
   # Use a clone of @settings.sequence in order to keep it unchanged
   sequenceClone = @settings.sequence[0..]
