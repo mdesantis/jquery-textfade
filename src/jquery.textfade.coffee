@@ -19,22 +19,31 @@ TextFade = (@$element, action, options) ->
   BLANK_REPLACE_REGEX = /[^\n]/g
   SEQUENCES           = 
     'random':  (text) -> shuffle [0..text.length]
-    'ltr_ttb': (text) -> [0..text.length]
-    # TODO 'ltr_btt': (text) -> $map text.split("\n"), (line) ->
+    'ltr_ttb': (text) ->
+      seq = []
+      c = 0
+
+      lines = text.match /.+\n?|\n/g
+
+      for line, i in lines
+        seqi = seq[i] = []
+        seqi.push c++ for j in [0..line.length-1]
+      
+      seq.reverse().reduce (a, b) -> a.concat b
 
   capitalize = (string) ->
     "#{string.charAt(0).toUpperCase()}#{string.slice(1)}"
 
-  shuffle = (a) ->
-    i = a.length
+  shuffle = (array) ->
+    i = array.length
 
     while i
       j = Math.floor Math.random()*i
-      x = a[--i]
-      a[i] = a[j]
-      a[j] = x
+      x = array[--i]
+      array[i] = array[j]
+      array[j] = x
 
-    a
+    array
 
   defaultSettings = ->
     'text':         null
@@ -71,6 +80,8 @@ TextFade = (@$element, action, options) ->
     @settings.sequence = @settings.sequence text
   else
     # Assert @settings.sequence to be an array; leave it unchanged
+
+  console.log text.length, @settings.sequence.length
 
   # Use a clone of @settings.sequence in order to keep it unchanged
   sequenceClone = @settings.sequence[0..]
