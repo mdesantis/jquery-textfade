@@ -23,6 +23,7 @@ $(document).ready(function() {
     'threads': 3
   })
   $('#test6i').textFadeIn({ 'text': contents, 'milliseconds': 1,  'sequence': 'ltr_ttb' })
+  $('#test6i').textFadeIn({ 'text': contents, 'milliseconds': 1,  'sequence': 'ltr_btt' })
 
   $('#test1o').textFadeOut({                   'milliseconds': 1                         })
   $('#test2o').textFadeOut({ 'text': contents, 'milliseconds': 1                         })
@@ -32,6 +33,6 @@ $(document).ready(function() {
     'milliseconds': 10,
     'threads': 3
   })
-  $('#test6o').textFadeOut({ 'text': contents, 'milliseconds': 1,  'sequence': 'ltr_ttb' })
+  $('#test6o').textFadeOut({ 'text': contents, 'milliseconds': 1,  'sequence': 'ltr_btt' })
 
 })

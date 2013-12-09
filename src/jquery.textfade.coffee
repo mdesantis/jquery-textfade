@@ -20,7 +20,7 @@ TextFade = (@$element, action, options) ->
   LINES_SPLIT_REGEX   = /.+\n?|\n/g
   SEQUENCES           = 
     'random'  : (text) -> shuffle times text.length
-    'ltr_ttb' : (text) -> [0...text.length]
+    'ltr_ttb' : (text) -> times text.length
     'ltr_btt' : (text) ->
       seq = []
       c   = 0
