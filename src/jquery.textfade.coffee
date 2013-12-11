@@ -10,15 +10,12 @@ https://github.com/mdesantis/jquery.textfade/LICENSE
 # Coffeescript compile command: coffee --compile --output lib/ src/
 # Uglify command:               uglifyjs lib/jquery.textfade.js --mangle --compress --comments '/!/' --output lib/jquery.textfade.min.js
 
-# TODO sequenceTypes: random, ltr_ttb, ltr_btt, trl_ttb, trl_btt
-
-$ = window.jQuery
-
 TextFade = (@$element, action, options) ->
 
+  $                   = window.jQuery
   BLANK_REPLACE_REGEX = /[^\n]/g
   LINES_SPLIT_REGEX   = /.+\n?|\n/g
-  SEQUENCES           = 
+  SEQUENCES           =
     'random'  : (text) -> shuffle times text.length
     'ltr_ttb' : (text) -> times text.length
     'ltr_btt' : (text) ->
