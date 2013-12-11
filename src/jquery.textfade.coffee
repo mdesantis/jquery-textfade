@@ -85,7 +85,7 @@ TextFade = (@$element, action, options) ->
   @_step = (sequence) ->
     times @settings.threads, () =>
       if sequence.length == 0
-        window.clearInterval @interval
+        window.clearInterval @_interval
         @_trigger 'complete', action
         return
       @_replace sequence
@@ -118,7 +118,7 @@ TextFade = (@$element, action, options) ->
 
   @_trigger 'start', action
 
-  @interval = window.setInterval =>
+  @_interval = window.setInterval =>
     @_step sequenceClone
   , @settings.milliseconds
 
