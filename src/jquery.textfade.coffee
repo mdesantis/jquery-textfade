@@ -2,15 +2,15 @@
 jQuery.TextFade v 1.0.0.alpha
 https://github.com/mdesantis/jquery.textfade
 
-Copyright 2013 Maurizio De Santis
+Copyright 2014 Maurizio De Santis
 Released under the MIT license
 https://github.com/mdesantis/jquery.textfade/LICENSE
 ###
 
-# Coffeescript compile command: coffee --compile --output lib/ src/
+# Coffeescript compile command: coffee --compile --output lib src
 # Uglify command:               uglifyjs lib/jquery.textfade.js --mangle --compress --comments '/!/' --output lib/jquery.textfade.min.js
 
-TextFade = (@$element, action, options) ->
+TextFade = (@$element, @action, options) ->
 
   $                   = window.jQuery
   BLANK_REPLACE_REGEX = /[^\n]/g
@@ -31,8 +31,7 @@ TextFade = (@$element, action, options) ->
   textToSequence = (text, eachLineSequence) ->
     sequence = []
     count    = 0
-
-    lines = text.match LINES_SPLIT_REGEX
+    lines    = text.match LINES_SPLIT_REGEX
 
     for line, i in lines
       lineSequence = sequence[i] = []
@@ -68,22 +67,29 @@ TextFade = (@$element, action, options) ->
     'threads'      : 1
     'sequence'     : 'random'
 
-  @_trigger = (event_type, action) ->
-    @$element.trigger "#{event_type}.textFade#{capitalize(action)}"
-    @$element.trigger "#{event_type}.textFade", [action]
+  @_trigger = (event_type, extraParameters) ->
+    extraParameters ?= []
+
+    @$element.trigger "#{event_type}.textFade#{capitalize(@action)}", extraParameters
+    @$element.trigger "#{event_type}.textFade", extraParameters.unshift(@action)
 
   @_replace = (sequence) ->
-    index     = sequence.shift()
-    text      = @$element.text()
-    character = @endText.charAt index
+    index    = sequence.shift()
+    text     = @$element.text()
+    prevChar = @begText.charAt index
+    nextChar = @endText.charAt index
 
-    @$element.text "#{text.substr 0, index}#{character}#{text.substr index+character.length}"
+    @_trigger 'replace', [prevChar, nextChar]
+
+    return if prevChar == nextChar # no need to replace; skip
+
+    @$element.text "#{text.substr 0, index}#{nextChar}#{text.substr index+nextChar.length}"
 
   @_step = (sequence) ->
     times @settings.threads, () =>
       if sequence.length == 0
         window.clearInterval @_interval
-        @_trigger 'complete', action
+        @_trigger 'complete'
         return
       @_replace sequence
 
@@ -91,7 +97,7 @@ TextFade = (@$element, action, options) ->
 
   text = @settings.text ?= @$element.text()
 
-  if typeof @settings.sequence == 'string'
+  if $.type(@settings.sequence) == 'string'
     @settings.sequence = SEQUENCES[@settings.sequence] text
   else if $.isFunction @settings.sequence
     @settings.sequence = @settings.sequence text
@@ -103,7 +109,7 @@ TextFade = (@$element, action, options) ->
   # Newlines are preserved in order to preserve the text structure
   blankText = text.replace BLANK_REPLACE_REGEX, ' '
 
-  switch action
+  switch @action
     when 'in'
       @begText = blankText
       @endText = text
@@ -113,7 +119,7 @@ TextFade = (@$element, action, options) ->
 
   @$element.text @begText
 
-  @_trigger 'start', action
+  @_trigger 'start'
 
   @_interval = window.setInterval =>
     @_step sequenceClone
@@ -121,11 +127,11 @@ TextFade = (@$element, action, options) ->
 
   @
 
-$.fn.textFadeIn = (options) ->
-  @.each -> new TextFade $(@), 'in', options
-
-$.fn.textFadeOut = (options) ->
-  @.each -> new TextFade $(@), 'out', options
-
 $.fn.textFade = (action, options) ->
   @.each -> new TextFade $(@), action, options
+
+$.fn.textFadeIn = (options) ->
+  @.textFade 'in', options
+
+$.fn.textFadeOut = (options) ->
+  @.textFade 'out', options

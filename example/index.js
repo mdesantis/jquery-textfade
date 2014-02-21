@@ -14,6 +14,10 @@ $(document).ready(function() {
   $('#test1i').on('complete.textFadeIn', function(e) {
     console.log(e.type+'.'+e.namespace, e)
   })
+  $('#test1i').on('replace.textFadeIn', function(e, prevChar, nextChar) {
+    console.log(e.type+'.'+e.namespace, e, prevChar, nextChar)
+    //console.log("Replacing " + JSON.stringify(prevChar) + " with " + JSON.stringify(nextChar))
+  })
   $('#test1i').textFadeIn({                   'milliseconds': 10                        })
   $('#test2i').textFadeIn({ 'text': contents, 'milliseconds': 10                        })
   $('#test3i').textFadeIn({ 'text': contents, 'milliseconds': 10                        })
