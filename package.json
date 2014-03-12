@@ -1,0 +1,35 @@
+{
+  "name": "jquery.textfade",
+  "version": "1.0.0",
+  "description": "jQuery plugin for text fading effects",
+  "main": "lib/jquery.textfade.js",
+  "directories": {
+    "example": "example",
+    "lib": "lib"
+  },
+  "scripts": {
+    "prepublish": "coffee --compile --output lib src && uglifyjs lib/jquery.textfade.js --mangle --compress --comments '/!/' --output lib/jquery.textfade.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mdesantis/jquery.textfade.git"
+  },
+  "keywords": [
+    "jquery",
+    "effects",
+    "textfading",
+    "textfade"
+  ],
+  "author": {
+    "name": "Maurizio De Santis",
+    "email": "desantis.maurizio@gmail.com"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.7.1",
+    "uglify-js": "~2.4.13",
+    "grunt": "~0.4.4"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "cb26ab629c9f8b3df176f1dd00c09b6a3ffb08ee"
+}
