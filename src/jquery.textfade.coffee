@@ -1,5 +1,5 @@
 ###!
-jQuery.TextFade v 1.0.0.alpha
+jQuery.TextFade v 1.0.0
 https://github.com/mdesantis/jquery.textfade
 
 Copyright 2014 Maurizio De Santis
