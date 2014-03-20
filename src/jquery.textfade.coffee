@@ -8,7 +8,8 @@ https://github.com/mdesantis/jquery.textfade/LICENSE
 ###
 
 # Coffeescript compile command: coffee --compile --output lib src
-# Uglify command:               uglifyjs lib/jquery.textfade.js --mangle --compress --comments '/!/' --output lib/jquery.textfade.min.js
+# Uglify command:               uglifyjs lib/jquery.textfade.js --mangle --compress --comments '/!/' \
+#                                        --output lib/jquery.textfade.min.js
 
 TextFade = (@$element, @action, options) ->
 
