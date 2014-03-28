@@ -8,7 +8,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "prepublish": "coffee --compile --output lib src && uglifyjs lib/jquery.textfade.js --mangle --compress --comments '/!/' --output lib/jquery.textfade.min.js"
+    "prepublish": "coffee --compile --output lib src && uglifyjs lib/jquery.textfade.js --mangle --compress --comments '/^!/' --output lib/jquery.textfade.min.js"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,8 @@
   "devDependencies": {
     "coffee-script": "~1.7.1",
     "uglify-js": "~2.4.13",
-    "grunt": "~0.4.4"
+    "grunt": "~0.4.4",
+    "grunt-contrib-uglify": "~0.4.0"
   },
   "license": "MIT",
   "readmeFilename": "README.md",
