@@ -7,9 +7,6 @@ Released under the MIT license
 https://github.com/mdesantis/jquery.textfade/LICENSE
 ###
 
-# Compilation:  coffee -c -o lib src
-# Minification: uglifyjs lib/jquery.textfade.js -o lib/jquery.textfade.min.js -m -c --comments '/^!/'
-
 TextFade = (@$element, @action, options) ->
 
   $                   = window.jQuery
