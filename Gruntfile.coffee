@@ -17,4 +17,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
 
+  grunt.registerTask 'prepublish', ['coffee', 'uglify']
+
   null

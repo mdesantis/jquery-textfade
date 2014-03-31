@@ -8,7 +8,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "prepublish": "coffee --compile --output lib src && uglifyjs lib/jquery.textfade.js --mangle --compress --comments '/^!/' --output lib/jquery.textfade.min.js"
+    "prepublish": "grunt prepublish"
   },
   "repository": {
     "type": "git",
