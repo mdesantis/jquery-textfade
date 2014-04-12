@@ -10,7 +10,7 @@ https://github.com/mdesantis/jquery.textfade/LICENSE
 TextFade = (@$element, @action, options) ->
 
   $                   = window.jQuery
-  BLANK_REPLACE_REGEX = /[^\n]/g
+  BLANK_TEXT_REGEX    = /[^\n]/g
   LINES_SPLIT_REGEX   = /.+\n?|\n/g
   SEQUENCES           =
     'random'  : (text) -> shuffle times text.length
@@ -104,7 +104,7 @@ TextFade = (@$element, @action, options) ->
   sequenceClone = @settings.sequence[0..]
 
   # Newlines are preserved in order to preserve the text structure
-  blankText = text.replace BLANK_REPLACE_REGEX, ' '
+  blankText = text.replace BLANK_TEXT_REGEX, ' '
 
   switch @action
     when 'in'
