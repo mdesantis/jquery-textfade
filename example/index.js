@@ -1,47 +1,47 @@
 $(document).ready(function() {
 
-  var contents = $('#sample').text()
+  var contents = $('#template').text()
   
-  $('#test1i').on('start.textFade', function(e, action) {
+  $('#sample1i').on('start.textFade', function(e, action) {
     console.log(e.type+'.'+e.namespace, e, action)
   })
-  $('#test1i').on('start.textFadeIn', function(e) {
+  $('#sample1i').on('start.textFadeIn', function(e) {
     console.log(e.type+'.'+e.namespace, e)
   })
-  $('#test1i').on('complete.textFade', function(e, action) {
+  $('#sample1i').on('complete.textFade', function(e, action) {
     console.log(e.type+'.'+e.namespace, e, action)
   })
-  $('#test1i').on('complete.textFadeIn', function(e) {
+  $('#sample1i').on('complete.textFadeIn', function(e) {
     console.log(e.type+'.'+e.namespace, e)
   })
-  $('#test1i').on('replace.textFadeIn', function(e, prevChar, nextChar) {
+  $('#sample1i').on('replace.textFadeIn', function(e, prevChar, nextChar) {
     console.log(e.type+'.'+e.namespace, e, prevChar, nextChar)
     //console.log("Replacing " + JSON.stringify(prevChar) + " with " + JSON.stringify(nextChar))
   })
-  $('#test1i').textFadeIn({                   'milliseconds': 10                        })
-  $('#test2i').textFadeIn({ 'text': contents, 'milliseconds': 10                        })
-  $('#test3i').textFadeIn({ 'text': contents, 'milliseconds': 10                        })
-  $('#test4i').textFadeIn({ 'text': contents, 'threads':      3                         })
-  $('#test5i').textFadeIn({ 'text': contents,
+  $('#sample1i').textFadeIn({                   'milliseconds': 10                        })
+  $('#sample2i').textFadeIn({ 'text': contents, 'milliseconds': 10                        })
+  $('#sample3i').textFadeIn({ 'text': contents, 'milliseconds': 10                        })
+  $('#sample4i').textFadeIn({ 'text': contents, 'threads':      3                         })
+  $('#sample5i').textFadeIn({ 'text': contents,
     'milliseconds': 20,
     'threads': 3
   })
-  $('#test6i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_ttb' })
-  $('#test7i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_btt' })
-  $('#test8i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_ttb' })
-  $('#test9i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_btt' })
+  $('#sample6i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_ttb' })
+  $('#sample7i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_btt' })
+  $('#sample8i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_ttb' })
+  $('#sample9i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_btt' })
 
-  $('#test1o').textFadeOut({                   'milliseconds': 10                        })
-  $('#test2o').textFadeOut({ 'text': contents, 'milliseconds': 10                        })
-  $('#test3o').textFadeOut({ 'text': contents, 'milliseconds': 10                        })
-  $('#test4o').textFadeOut({ 'text': contents, 'threads':      3                         })
-  $('#test5o').textFadeOut({ 'text': contents,
+  $('#sample1o').textFadeOut({                   'milliseconds': 10                        })
+  $('#sample2o').textFadeOut({ 'text': contents, 'milliseconds': 10                        })
+  $('#sample3o').textFadeOut({ 'text': contents, 'milliseconds': 10                        })
+  $('#sample4o').textFadeOut({ 'text': contents, 'threads':      3                         })
+  $('#sample5o').textFadeOut({ 'text': contents,
     'milliseconds': 20,
     'threads': 3
   })
-  $('#test6o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_ttb' })
-  $('#test7o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_btt' })
-  $('#test8o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_ttb' })
-  $('#test9o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_btt' })
+  $('#sample6o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_ttb' })
+  $('#sample7o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_btt' })
+  $('#sample8o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_ttb' })
+  $('#sample9o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_btt' })
 
 })
