@@ -59,10 +59,10 @@ TextFade = (@$element, @action, options) ->
     array
 
   defaultSettings = ->
-    'text'         : null
     'milliseconds' : 1
-    'threads'      : 1
     'sequence'     : 'random'
+    'text'         : null
+    'threads'      : 1
 
   @_trigger = (event_type, extraParameters) ->
     extraParameters ?= []

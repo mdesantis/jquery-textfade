@@ -7,7 +7,7 @@ module.exports = (grunt) ->
       compile:
         files:
           'lib/jquery.textfade.js': 'src/jquery.textfade.coffee'
-    
+
     # -> uglifyjs lib/jquery.textfade.js -o lib/jquery.textfade.min.js -m -c --comments '/^!/'
     uglify:
       options:
@@ -17,13 +17,12 @@ module.exports = (grunt) ->
       minify:
         files:
           'lib/jquery.textfade.min.js': 'lib/jquery.textfade.js'
-    
+
     # -> coffee --watch --output lib src
     watch:
       coffee:
         files: ['src/jquery.textfade.coffee']
         tasks: 'coffee'
-
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
