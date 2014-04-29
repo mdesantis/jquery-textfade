@@ -16,25 +16,25 @@ TextFade = (@$element, @action, options) ->
     'random'  : (text) -> shuffle times text.length
     'ltr_ttb' : (text) -> times text.length
     'ltr_btt' : (text) ->
-      sequence = textToSequence text, (seqi, c) -> seqi.push c
+      sequence = textToSequence text, (lineSequence, charIndex) -> lineSequence.push charIndex
       sequence.reverse().reduce (a, b) -> a.concat b
     'rtl_ttb' : (text) ->
-      sequence = textToSequence text, (seqi, c) -> seqi.unshift c
+      sequence = textToSequence text, (lineSequence, charIndex) -> lineSequence.unshift charIndex
       sequence.reduce (a, b) -> a.concat b
     'rtl_btt' : (text) ->
-      sequence = textToSequence text, (seqi, c) -> seqi.unshift c
+      sequence = textToSequence text, (lineSequence, charIndex) -> lineSequence.unshift charIndex
       sequence.reverse().reduce (a, b) -> a.concat b
 
   textToSequence = (text, eachLineSequence) ->
-    sequence = []
-    count    = 0
-    lines    = text.match LINES_SPLIT_REGEX
+    sequence  = []
+    charIndex = 0
+    lines     = text.match LINES_SPLIT_REGEX
 
-    for line, i in lines
-      lineSequence = sequence[i] = []
+    for line, lineIndex in lines
+      lineSequence = sequence[lineIndex] = []
       times line.length, () ->
-        eachLineSequence lineSequence, count
-        count++
+        eachLineSequence lineSequence, charIndex
+        charIndex++
 
     sequence
 

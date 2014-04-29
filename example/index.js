@@ -1,23 +1,22 @@
 $(document).ready(function() {
-
   var contents = $('#template').text()
   
-  $('#sample1i').on('start.textFade', function(e, action) {
-    console.log(e.type+'.'+e.namespace, e, action)
-  })
-  $('#sample1i').on('start.textFadeIn', function(e) {
-    console.log(e.type+'.'+e.namespace, e)
-  })
-  $('#sample1i').on('complete.textFade', function(e, action) {
-    console.log(e.type+'.'+e.namespace, e, action)
-  })
-  $('#sample1i').on('complete.textFadeIn', function(e) {
-    console.log(e.type+'.'+e.namespace, e)
-  })
-  $('#sample1i').on('replace.textFadeIn', function(e, prevChar, nextChar) {
-    console.log(e.type+'.'+e.namespace, e, prevChar, nextChar)
-    //console.log("Replacing " + JSON.stringify(prevChar) + " with " + JSON.stringify(nextChar))
-  })
+  // $('#sample1i').on('start.textFade', function(e, action) {
+  //   // console.log(e.type+'.'+e.namespace, e, action)
+  // })
+  // $('#sample1i').on('start.textFadeIn', function(e) {
+  //   // console.log(e.type+'.'+e.namespace, e)
+  // })
+  // $('#sample1i').on('complete.textFade', function(e, action) {
+  //   // console.log(e.type+'.'+e.namespace, e, action)
+  // })
+  // $('#sample1i').on('complete.textFadeIn', function(e) {
+  //   // console.log(e.type+'.'+e.namespace, e)
+  // })
+  // $('#sample1i').on('replace.textFadeIn', function(e, prevChar, nextChar) {
+  //   // console.log(e.type+'.'+e.namespace, e, prevChar, nextChar)
+  //   // console.log("Replacing " + JSON.stringify(prevChar) + " with " + JSON.stringify(nextChar))
+  // })
   $('#sample1i').textFadeIn({                   'milliseconds': 10                        })
   $('#sample2i').textFadeIn({ 'text': contents, 'milliseconds': 10                        })
   $('#sample3i').textFadeIn({ 'text': contents, 'milliseconds': 10                        })
@@ -43,5 +42,4 @@ $(document).ready(function() {
   $('#sample7o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_btt' })
   $('#sample8o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_ttb' })
   $('#sample9o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_btt' })
-
 })
