@@ -8,7 +8,6 @@ https://github.com/mdesantis/jquery.textfade/LICENSE
 ###
 
 TextFade = (@$element, @action, options) ->
-
   $                   = window.jQuery
   BLANK_TEXT_REGEX    = /[^\n]/g
   LINES_SPLIT_REGEX   = /.+\n?|\n/g
@@ -16,24 +15,21 @@ TextFade = (@$element, @action, options) ->
     'random'  : (text) -> shuffle times text.length
     'ltr_ttb' : (text) -> times text.length
     'ltr_btt' : (text) -> flatten (textToSequences text).reverse()
-    'rtl_ttb' : (text) -> flatten (textToSequences text, (lineSequence, charIndex) -> lineSequence.unshift charIndex)
-    'rtl_btt' : (text) -> flatten (textToSequences text, (lineSequence, charIndex) -> lineSequence.unshift charIndex).reverse()
+    'rtl_ttb' : (text) -> flatten $.map textToSequences(text), (v) -> [v.reverse()]
+    'rtl_btt' : (text) -> flatten ($.map textToSequences(text), (v) -> [v.reverse()]).reverse()
     'ttb_ltr' : (text) -> flatten zip textToSequences text
     'ttb_rtl' : (text) -> flatten (zip textToSequences(text).reverse()).reverse()
     'btt_ltr' : (text) -> flatten zip textToSequences(text).reverse()
     'btt_rtl' : (text) -> flatten (zip textToSequences text).reverse()
 
-  textToSequences = (text, eachLineSequence) ->
-    sequences          = []
-    charIndex         = 0
-    lines             = text.match LINES_SPLIT_REGEX
-    eachLineSequence ?= (lineSequence, charIndex) -> lineSequence.push charIndex
+  textToSequences = (text) ->
+    sequences = []
+    charIndex = 0
+    lines     = text.match LINES_SPLIT_REGEX
 
     for line, lineIndex in lines
-      lineSequence = sequences[lineIndex] = []
-      times line.length, () ->
-        eachLineSequence lineSequence, charIndex
-        charIndex++
+      sequences[lineIndex] = []
+      times line.length, () -> sequences[lineIndex].push charIndex++
 
     sequences
 
