@@ -22,7 +22,9 @@ module.exports = (grunt) ->
     watch:
       coffee:
         files: ['src/jquery.textfade.coffee']
-        tasks: 'coffee'
+        tasks: ['coffee']
+        options:
+          livereload: true
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-uglify'

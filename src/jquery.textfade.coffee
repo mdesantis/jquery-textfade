@@ -16,36 +16,60 @@ TextFade = (@$element, @action, options) ->
     'random'  : (text) -> shuffle times text.length
     'ltr_ttb' : (text) -> times text.length
     'ltr_btt' : (text) ->
-      sequence = textToSequence text, (lineSequence, charIndex) -> lineSequence.push charIndex
-      sequence.reverse().reduce (a, b) -> a.concat b
+      sequences = textToSequences text
+      sequences.reverse().reduce (p, c) -> p.concat c
     'rtl_ttb' : (text) ->
-      sequence = textToSequence text, (lineSequence, charIndex) -> lineSequence.unshift charIndex
-      sequence.reduce (a, b) -> a.concat b
+      sequences = textToSequences text, (lineSequence, charIndex) -> lineSequence.unshift charIndex
+      sequences.reduce (p, c) -> p.concat c
     'rtl_btt' : (text) ->
-      sequence = textToSequence text, (lineSequence, charIndex) -> lineSequence.unshift charIndex
-      sequence.reverse().reduce (a, b) -> a.concat b
+      sequences = textToSequences text, (lineSequence, charIndex) -> lineSequence.unshift charIndex
+      sequences.reverse().reduce (p, c) -> p.concat c
+    'ttb_ltr' : (text) -> ttbBttSequence text, times, times
+    'ttb_rtl' : (text) -> ttbBttSequence text, reversedTimes, reversedTimes
+    'btt_ltr' : (text) -> ttbBttSequence text, times, reversedTimes
+    'btt_rtl' : (text) -> ttbBttSequence text, reversedTimes, times
 
-  textToSequence = (text, eachLineSequence) ->
-    sequence  = []
-    charIndex = 0
-    lines     = text.match LINES_SPLIT_REGEX
+  ttbBttSequence = (text, iFn, jFn) ->
+    sequence           = []
+    sequences          = textToSequences text
+    sequencesLength    = sequences.length
+    maxSequencesLength = max $.map sequences, (v) -> v.length
+
+    iFn maxSequencesLength, (i) ->
+      jFn sequencesLength, (j) ->
+        sequence.push sequences[j][i] if sequences[j][i]?
+
+    sequence
+
+  textToSequences = (text, eachLineSequence) ->
+    sequences          = []
+    charIndex         = 0
+    lines             = text.match LINES_SPLIT_REGEX
+    eachLineSequence ?= (lineSequence, charIndex) -> lineSequence.push charIndex
 
     for line, lineIndex in lines
-      lineSequence = sequence[lineIndex] = []
+      lineSequence = sequences[lineIndex] = []
       times line.length, () ->
         eachLineSequence lineSequence, charIndex
         charIndex++
 
-    sequence
+    sequences
 
-  capitalize = (string) ->
-    "#{string.charAt(0).toUpperCase()}#{string.slice(1)}"
+  capitalize = (string) -> "#{string.charAt(0).toUpperCase()}#{string.slice(1)}"
+
+  max = (a) -> a.reduce ( (p, c) -> if c > p then c else p ), -Infinity
 
   times = (n, fn) ->
     i   = 0
     fn ?= (i) -> i
 
     fn i++ while i < n
+
+  reversedTimes = (n, fn) ->
+    i   = n-1
+    fn ?= (i) -> i
+
+    fn i-- while i >= 0
 
   shuffle = (array) ->
     i = array.length
@@ -75,8 +99,6 @@ TextFade = (@$element, @action, options) ->
     text     = @$element.text()
     prevChar = @begText.charAt index
     nextChar = @endText.charAt index
-
-    @_trigger 'replace', [prevChar, nextChar]
 
     return if prevChar == nextChar # no need to replace; skip
 
