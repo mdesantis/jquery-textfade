@@ -15,31 +15,13 @@ TextFade = (@$element, @action, options) ->
   SEQUENCES           =
     'random'  : (text) -> shuffle times text.length
     'ltr_ttb' : (text) -> times text.length
-    'ltr_btt' : (text) ->
-      sequences = textToSequences text
-      sequences.reverse().reduce (p, c) -> p.concat c
-    'rtl_ttb' : (text) ->
-      sequences = textToSequences text, (lineSequence, charIndex) -> lineSequence.unshift charIndex
-      sequences.reduce (p, c) -> p.concat c
-    'rtl_btt' : (text) ->
-      sequences = textToSequences text, (lineSequence, charIndex) -> lineSequence.unshift charIndex
-      sequences.reverse().reduce (p, c) -> p.concat c
-    'ttb_ltr' : (text) -> ttbBttSequence text, times, times
-    'ttb_rtl' : (text) -> ttbBttSequence text, reversedTimes, reversedTimes
-    'btt_ltr' : (text) -> ttbBttSequence text, times, reversedTimes
-    'btt_rtl' : (text) -> ttbBttSequence text, reversedTimes, times
-
-  ttbBttSequence = (text, iFn, jFn) ->
-    sequence           = []
-    sequences          = textToSequences text
-    sequencesLength    = sequences.length
-    maxSequencesLength = max $.map sequences, (v) -> v.length
-
-    iFn maxSequencesLength, (i) ->
-      jFn sequencesLength, (j) ->
-        sequence.push sequences[j][i] if sequences[j][i]?
-
-    sequence
+    'ltr_btt' : (text) -> flatten (textToSequences text).reverse()
+    'rtl_ttb' : (text) -> flatten (textToSequences text, (lineSequence, charIndex) -> lineSequence.unshift charIndex)
+    'rtl_btt' : (text) -> flatten (textToSequences text, (lineSequence, charIndex) -> lineSequence.unshift charIndex).reverse()
+    'ttb_ltr' : (text) -> flatten zip textToSequences text
+    'ttb_rtl' : (text) -> flatten (zip textToSequences(text).reverse()).reverse()
+    'btt_ltr' : (text) -> flatten zip textToSequences(text).reverse()
+    'btt_rtl' : (text) -> flatten (zip textToSequences text).reverse()
 
   textToSequences = (text, eachLineSequence) ->
     sequences          = []
@@ -55,9 +37,22 @@ TextFade = (@$element, @action, options) ->
 
     sequences
 
-  capitalize = (string) -> "#{string.charAt(0).toUpperCase()}#{string.slice(1)}"
+  capitalize = (s) -> "#{s.charAt(0).toUpperCase()}#{s.slice(1)}"
 
-  max = (a) -> a.reduce ( (p, c) -> if c > p then c else p ), -Infinity
+  flatten = (a) -> a.reduce (p, c) -> p.concat c
+
+  max = (a) -> a.reduce ((p, c) -> if c > p then c else p), -Infinity
+
+  shuffle = (a) ->
+    i = a.length
+
+    while i
+      j = Math.floor Math.random()*i
+      x = a[--i]
+      a[i] = a[j]
+      a[j] = x
+
+    a
 
   times = (n, fn) ->
     i   = 0
@@ -65,22 +60,14 @@ TextFade = (@$element, @action, options) ->
 
     fn i++ while i < n
 
-  reversedTimes = (n, fn) ->
-    i   = n-1
-    fn ?= (i) -> i
+  zip = (a) ->
+    result = []
 
-    fn i-- while i >= 0
+    times (max $.map a, (v) -> v.length), (i) ->
+      for v in a
+        (result[i] ?= []).push v[i] if v[i]?
 
-  shuffle = (array) ->
-    i = array.length
-
-    while i
-      j = Math.floor Math.random()*i
-      x = array[--i]
-      array[i] = array[j]
-      array[j] = x
-
-    array
+    result
 
   defaultSettings = ->
     'milliseconds' : 1
