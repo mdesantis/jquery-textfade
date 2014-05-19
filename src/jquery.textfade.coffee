@@ -22,17 +22,6 @@ TextFade = (@$element, @action, options) ->
     'btt_ltr' : (text) -> flatten zip textToSequences(text).reverse()
     'btt_rtl' : (text) -> flatten (zip textToSequences text).reverse()
 
-  textToSequences = (text) ->
-    sequences = []
-    charIndex = 0
-    lines     = text.match LINES_SPLIT_REGEX
-
-    for line, lineIndex in lines
-      sequences[lineIndex] = []
-      times line.length, () -> sequences[lineIndex].push charIndex++
-
-    sequences
-
   capitalize = (s) -> "#{s.charAt(0).toUpperCase()}#{s.slice(1)}"
 
   flatten = (a) -> a.reduce (p, c) -> p.concat c
@@ -65,6 +54,17 @@ TextFade = (@$element, @action, options) ->
 
     result
 
+  textToSequences = (text) ->
+    sequences = []
+    charIndex = 0
+    lines     = text.match LINES_SPLIT_REGEX
+
+    for line, lineIndex in lines
+      sequences[lineIndex] = []
+      times line.length, () -> sequences[lineIndex].push charIndex++
+
+    sequences
+
   defaultSettings = ->
     'milliseconds' : 1
     'sequence'     : 'random'
@@ -83,13 +83,13 @@ TextFade = (@$element, @action, options) ->
     prevChar = @begText.charAt index
     nextChar = @endText.charAt index
 
-    return if prevChar == nextChar # no need to replace; skip
+    return if prevChar is nextChar # no need to replace; skip
 
     @$element.text "#{text.substr 0, index}#{nextChar}#{text.substr index+nextChar.length}"
 
   @_step = (sequence) ->
     times @settings.threads, () =>
-      if sequence.length == 0
+      if sequence.length is 0
         window.clearInterval @_interval
         @_trigger 'complete'
         return
@@ -97,9 +97,9 @@ TextFade = (@$element, @action, options) ->
 
   @settings = $.extend defaultSettings(), options
 
-  text = @settings.text ?= @$element.text()
+  text = @settings.text ? @$element.text()
 
-  if $.type(@settings.sequence) == 'string'
+  if $.type(@settings.sequence) is 'string'
     @settings.sequence = SEQUENCES[@settings.sequence] text
   else if $.isFunction @settings.sequence
     @settings.sequence = @settings.sequence text
