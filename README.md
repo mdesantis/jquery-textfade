@@ -6,7 +6,6 @@ WIP - Work In Progress
 
 1. Convert to Literate CoffeeScript
 1. Project page and presentation
-1. `Update gh-pages` Grunt task
 
 ## License
 
