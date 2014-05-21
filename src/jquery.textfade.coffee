@@ -15,8 +15,8 @@ TextFade = (@$element, @action, options) ->
     'random'  : (text) -> shuffle times text.length
     'ltr_ttb' : (text) -> times text.length
     'ltr_btt' : (text) -> flatten (textToSequences text).reverse()
-    'rtl_ttb' : (text) -> flatten $.map textToSequences(text), (v) -> [v.reverse()]
-    'rtl_btt' : (text) -> flatten ($.map textToSequences(text), (v) -> [v.reverse()]).reverse()
+    'rtl_ttb' : (text) -> flatten textToSequences(text).map((v) -> v.reverse())
+    'rtl_btt' : (text) -> flatten textToSequences(text).map((v) -> v.reverse()).reverse()
     'ttb_ltr' : (text) -> flatten zip textToSequences text
     'ttb_rtl' : (text) -> flatten (zip textToSequences(text).reverse()).reverse()
     'btt_ltr' : (text) -> flatten zip textToSequences(text).reverse()
@@ -26,7 +26,7 @@ TextFade = (@$element, @action, options) ->
 
   flatten = (a) -> a.reduce (p, c) -> p.concat c
 
-  max = (a) -> a.reduce ((p, c) -> if c > p then c else p), -Infinity
+  max = (a) -> a.reduce ((p, c) -> Math.max p, c), -Infinity
 
   shuffle = (a) ->
     i = a.length
@@ -48,7 +48,7 @@ TextFade = (@$element, @action, options) ->
   zip = (a) ->
     result = []
 
-    times (max $.map a, (v) -> v.length), (i) ->
+    times (max a.map (v) -> v.length), (i) ->
       for v in a
         (result[i] ?= []).push v[i] if v[i]?
 
@@ -98,6 +98,8 @@ TextFade = (@$element, @action, options) ->
   @settings = $.extend defaultSettings(), options
 
   text = @settings.text ? @$element.text()
+
+  console.log JSON.stringify textToSequences text
 
   if $.type(@settings.sequence) is 'string'
     @settings.sequence = SEQUENCES[@settings.sequence] text
