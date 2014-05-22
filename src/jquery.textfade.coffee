@@ -9,7 +9,8 @@ https://github.com/mdesantis/jquery.textfade/LICENSE
 
 TextFade = (@$element, @action, options) ->
   $                   = window.jQuery
-  BLANK_TEXT_REGEX    = /[^\n]/g
+  NOT_NEWLINE_REGEX   = /[^\n]/g
+  BLANK_CHARS_REGEX   = /\s/
   LINES_SPLIT_REGEX   = /.+\n?|\n/g
   SEQUENCES           =
     'random'  : (text) -> shuffle times text.length
@@ -25,6 +26,8 @@ TextFade = (@$element, @action, options) ->
   capitalize = (s) -> "#{s.charAt(0).toUpperCase()}#{s.slice(1)}"
 
   flatten = (a) -> a.reduce (p, c) -> p.concat c
+
+  include = (a, v) -> a.indexOf(v) isnt -1
 
   max = (a) -> a.reduce ((p, c) -> Math.max p, c), -Infinity
 
@@ -68,6 +71,7 @@ TextFade = (@$element, @action, options) ->
   defaultSettings = ->
     'milliseconds' : 1
     'sequence'     : 'random'
+    'skipChars'    : BLANK_CHARS_REGEX
     'text'         : null
     'threads'      : 1
 
@@ -99,19 +103,32 @@ TextFade = (@$element, @action, options) ->
 
   text = @settings.text ? @$element.text()
 
-  console.log JSON.stringify textToSequences text
+  sequence =
+    if $.type(@settings.sequence) is 'string'
+      SEQUENCES[@settings.sequence] text
+    else if $.isFunction @settings.sequence
+      @settings.sequence text
+    else
+      # Assume @settings.sequence to be an array
+      # Use a duplicate in order to keep `@settings.sequence` unchanged
+      @settings.sequence[0..]
 
-  if $.type(@settings.sequence) is 'string'
-    @settings.sequence = SEQUENCES[@settings.sequence] text
-  else if $.isFunction @settings.sequence
-    @settings.sequence = @settings.sequence text
-  # else assert @settings.sequence to be an array; leave it unchanged
+  skipChars =
+    if $.type(@settings.skipChars) is 'regexp'
+      (c) => @settings.skipChars.test c
+    else if $.type(@settings.skipChars) is 'string'
+      (c) => include @settings.skipChars.split(''), c
+    else
+      # Assume @settings.sequence to be a function
+      # Leave it unchanged
+      @settings.skipChars
 
-  # Use a clone of @settings.sequence in order to keep it unchanged
-  sequenceClone = @settings.sequence[0..]
+  # Filter out unecessary/unwanted sequence values
+  if skipChars? and skipChars isnt false
+    times sequence.length, (i) -> sequence.splice i, 1 if sequence[i]? and skipChars text.charAt sequence[i]
 
   # Newlines are preserved in order to preserve the text structure
-  blankText = text.replace BLANK_TEXT_REGEX, ' '
+  blankText = text.replace NOT_NEWLINE_REGEX, ' '
 
   switch @action
     when 'in'
@@ -126,7 +143,7 @@ TextFade = (@$element, @action, options) ->
   @_trigger 'start'
 
   @_interval = window.setInterval =>
-    @_step sequenceClone
+    @_step sequence
   , @settings.milliseconds
 
   @
