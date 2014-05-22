@@ -99,8 +99,6 @@ TextFade = (@$element, @action, options) ->
 
   text = @settings.text ? @$element.text()
 
-  console.log JSON.stringify textToSequences text
-
   if $.type(@settings.sequence) is 'string'
     @settings.sequence = SEQUENCES[@settings.sequence] text
   else if $.isFunction @settings.sequence
