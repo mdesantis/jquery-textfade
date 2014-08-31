@@ -4,11 +4,16 @@
   "description"    : "jQuery plugin for text fading effects",
   "license"        : "MIT",
   "readmeFilename" : "README.md",
-  "main"           : "lib/jquery.textfade.js",
+  "author"         : {
+    "name"  : "Maurizio De Santis",
+    "email" : "desantis.maurizio@gmail.com"
+  },
+
+  "main": "lib/jquery.textfade.js",
 
   "directories": {
-    "example": "example",
-    "lib": "lib"
+    "example" : "example",
+    "lib"     : "lib"
   },
 
   "scripts": {
@@ -16,8 +21,8 @@
   },
 
   "repository": {
-    "type": "git",
-    "url": "git://github.com/mdesantis/jquery.textfade.git"
+    "type" : "git",
+    "url"  : "git://github.com/mdesantis/jquery.textfade.git"
   },
 
   "keywords": [
@@ -27,17 +32,12 @@
     "textfade"
   ],
 
-  "author": {
-    "name": "Maurizio De Santis",
-    "email": "desantis.maurizio@gmail.com"
-  },
-
   "devDependencies": {
-    "coffee-script"        : "~1.7.0"  ,
-    "grunt"                : "~0.4.0"  ,
-    "grunt-contrib-coffee" : "~0.11.0" ,
-    "grunt-contrib-uglify" : "~0.5.0"  ,
-    "grunt-contrib-watch"  : "~0.6.0"  ,
+    "coffee-script"        : "~1.7.0",
+    "grunt"                : "~0.4.0",
+    "grunt-contrib-coffee" : "~0.11.0",
+    "grunt-contrib-uglify" : "~0.5.0",
+    "grunt-contrib-watch"  : "~0.6.0",
     "uglify-js"            : "~2.4.0"
   }
 }
