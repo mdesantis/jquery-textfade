@@ -8,7 +8,7 @@ https://github.com/mdesantis/jquery.textfade/LICENSE
 ###
 
 TextFade = (@$element, @action, options) ->
-  $                   = window.jQuery
+  $                   = jQuery
   BLANK_TEXT_REGEX    = /[^\n]/g
   LINES_SPLIT_REGEX   = /.+\n?|\n/g
   SEQUENCES           =
@@ -90,7 +90,7 @@ TextFade = (@$element, @action, options) ->
   @_step = (sequence) ->
     times @settings.threads, () =>
       if sequence.length is 0
-        window.clearInterval @_interval
+        clearInterval @_interval
         @_trigger 'complete'
         return
       @_replace sequence
@@ -123,7 +123,7 @@ TextFade = (@$element, @action, options) ->
 
   @_trigger 'start'
 
-  @_interval = window.setInterval =>
+  @_interval = setInterval =>
     @_step sequenceClone
   , @settings.milliseconds
 
