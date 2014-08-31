@@ -25,12 +25,12 @@
     "email": "desantis.maurizio@gmail.com"
   },
   "devDependencies": {
-    "coffee-script": "~1.7.1",
-    "grunt": "~0.4.4",
-    "grunt-contrib-coffee": "~0.10.1",
-    "grunt-contrib-uglify": "~0.4.0",
-    "grunt-contrib-watch": "~0.6.1",
-    "uglify-js": "~2.4.13"
+    "coffee-script": "~1.7.0",
+    "grunt": "~0.4.0",
+    "grunt-contrib-coffee": "~0.11.0",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-contrib-watch": "~0.6.0",
+    "uglify-js": "~2.4.0"
   },
   "license": "MIT",
   "readmeFilename": "README.md",
