@@ -6,7 +6,7 @@ module.exports = (grunt) ->
     coffee:
       compile:
         files:
-          'lib/jquery.textfade.js': 'src/jquery.textfade.coffee'
+          'lib/jquery.textfade.js': 'src/jquery.textfade.litcoffee'
 
     # -> uglifyjs lib/jquery.textfade.js -o lib/jquery.textfade.min.js -m -c --comments '/^!/'
     uglify:
@@ -21,7 +21,7 @@ module.exports = (grunt) ->
     # -> coffee --watch --output lib src
     watch:
       coffee:
-        files: ['src/jquery.textfade.coffee']
+        files: ['src/jquery.textfade.litcoffee']
         tasks: ['coffee']
         options:
           livereload: true
