@@ -39,7 +39,5 @@
     "grunt-contrib-uglify" : "~0.5.0"  ,
     "grunt-contrib-watch"  : "~0.6.0"  ,
     "uglify-js"            : "~2.4.0"
-  },
-  
-  "gitHead": "cb26ab629c9f8b3df176f1dd00c09b6a3ffb08ee"
+  }
 }
