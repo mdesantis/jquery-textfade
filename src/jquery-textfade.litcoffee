@@ -1,10 +1,10 @@
     ###!
     jQuery.TextFade v1.0.0
-    https://github.com/mdesantis/jquery.textfade
+    https://github.com/mdesantis/jquery-textfade
 
     Copyright 2014 Maurizio De Santis
     Released under the MIT license
-    https://github.com/mdesantis/jquery.textfade/LICENSE
+    https://github.com/mdesantis/jquery-textfade/LICENSE
     ###
 
 # jQuery.TextFade

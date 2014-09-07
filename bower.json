@@ -1,7 +1,7 @@
 {
   "name": "jquery-textfade",
   "version": "1.0.0",
-  "homepage": "https://github.com/mdesantis/jquery.textfade",
+  "homepage": "https://github.com/mdesantis/jquery-textfade",
   "authors": [
     { "name": "Maurizio De Santis", "email": "desantis.maurizio@gmail.com", "homepage": "http://www.mauriziodesantis.it" }
   ],
@@ -25,7 +25,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/mdesantis/jquery.textfade.git"
+    "url": "git://github.com/mdesantis/jquery-textfade.git"
   },
   "dependencies": {
     "jquery": "~2.1.1"

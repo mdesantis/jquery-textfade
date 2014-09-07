@@ -1,4 +1,4 @@
-# [jQuery.textFade](http://mdesantis.github.io/jquery.textfade)
+# [jQuery.textFade](http://mdesantis.github.io/jquery-textfade)
 
 WIP - Work In Progress
 

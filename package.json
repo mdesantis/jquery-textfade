@@ -22,7 +22,7 @@
 
   "repository": {
     "type" : "git",
-    "url"  : "git://github.com/mdesantis/jquery.textfade.git"
+    "url"  : "git://github.com/mdesantis/jquery-textfade.git"
   },
 
   "keywords": [
