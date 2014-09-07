@@ -22,7 +22,7 @@ module.exports = (grunt) ->
     watch:
       coffee:
         files: ['src/jquery.textfade.litcoffee']
-        tasks: ['coffee']
+        tasks: ['prepublish']
         options:
           livereload: true
 
