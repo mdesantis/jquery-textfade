@@ -95,25 +95,25 @@ character of the last line, up to the start of line; then it moves to the previo
 
         'rtl_btt' : (text) -> flatten textToSequences(text).map((v) -> v.reverse()).reverse()
 
-*ttb_ltr**: top-to-bottom character/left-to-right line; the text fading starts at the first
+**ttb_ltr**: top-to-bottom character/left-to-right line; the text fading starts at the first
 character of the first line, up to the first character of the last line; then it moves to the next
 character of the first line
 
         'ttb_ltr' : (text) -> flatten zip textToSequences text
 
-*ttb_rtl**: top-to-bottom character/right-to-left line; the text fading starts at the last character
+**ttb_rtl**: top-to-bottom character/right-to-left line; the text fading starts at the last character
 of the first line, up to the last character of the last line; then it moves to the previous
 character of the first line
 
         'ttb_rtl' : (text) -> flatten (zip textToSequences(text).reverse()).reverse()
 
-*btt_ltr**: bottom-to-top character/left-to-right line; the text fading starts at the first
+**btt_ltr**: bottom-to-top character/left-to-right line; the text fading starts at the first
 character of the last line, up to the first character of the first line; then it moves to the next
 character of the last line
 
         'btt_ltr' : (text) -> flatten zip textToSequences(text).reverse()
 
-*btt_rtl**: bottom-to-top character/right-to-left line; the text fading starts at the last
+**btt_rtl**: bottom-to-top character/right-to-left line; the text fading starts at the last
 character of the last line, up to the first character of the last line; then it moves to the next
 character of the last line
 

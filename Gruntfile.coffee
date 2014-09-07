@@ -6,9 +6,9 @@ module.exports = (grunt) ->
     coffee:
       compile:
         files:
-          'lib/jquery.textfade.js': 'src/jquery.textfade.litcoffee'
+          'lib/jquery-textfade.js': 'src/jquery-textfade.litcoffee'
 
-    # -> uglifyjs lib/jquery.textfade.js -o lib/jquery.textfade.min.js -m -c --comments '/^!/'
+    # -> uglifyjs lib/jquery-textfade.js -o lib/jquery-textfade.min.js -m -c --comments '/^!/'
     uglify:
       options:
         compress:         true
@@ -16,12 +16,12 @@ module.exports = (grunt) ->
         preserveComments: (_, comment) -> /^!/.test comment.value
       minify:
         files:
-          'lib/jquery.textfade.min.js': 'lib/jquery.textfade.js'
+          'lib/jquery-textfade.min.js': 'lib/jquery-textfade.js'
 
     # -> coffee --watch --output lib src
     watch:
       coffee:
-        files: ['src/jquery.textfade.litcoffee']
+        files: ['src/jquery-textfade.litcoffee']
         tasks: ['prepublish']
         options:
           livereload: true

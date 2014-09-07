@@ -1,5 +1,5 @@
 {
-  "name"           : "jquery.textfade",
+  "name"           : "jquery-textfade",
   "version"        : "1.0.0",
   "description"    : "jQuery plugin for text fading effects",
   "license"        : "MIT",
@@ -9,7 +9,7 @@
     "email" : "desantis.maurizio@gmail.com"
   },
 
-  "main": "lib/jquery.textfade.js",
+  "main": "lib/jquery-textfade.js",
 
   "directories": {
     "example" : "example",
