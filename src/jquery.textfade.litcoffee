@@ -28,27 +28,29 @@ fade-in effect.
 - **@action**: the fading action; can be `'in'`, which causes the text to appear, or `'out'`, which
   causes the text to disappear
 - **options**: the available options, which are:
-    - **text**: if this option is specified, its value will replace the content of the selected
-      element, so as to be used for the fading effect; otherwise the fading text is taken from the
-      selected element content
-    - **sequence**: an array of characters indexes, which determine the order of the text fading.
-      The option can be:
-        - an array: it will be iterated using each value as the characters index sequentially
-        - a string: one between `random`, `ltr_ttb`, `ltr_btt`, `rtl_ttb`, `rtl_btt`, `ttb_ltr`,
-          `ttb_rtl`, `btt_ltr`, `btt_rtl`; it selects one between the preset sequences. More on this
-          [below](#preset-sequences)
-        - a function: it takes the fading text as argument and returns an array containing the
-          characters indexes
-    - **milliseconds**:
-    - **threads**:
+  - **text**: if this option is specified, its value will replace the content of the selected
+    element, so as to be used for the fading effect; otherwise the fading text is taken from the
+    selected element content
+  - **sequence**: an array of characters indexes, which determine the order of the text fading.
+    The option can be:
+    - an array: it will be iterated using each value as the characters index sequentially
+    - a string: one between `random`, `ltr_ttb`, `ltr_btt`, `rtl_ttb`, `rtl_btt`, `ttb_ltr`,
+      `ttb_rtl`, `btt_ltr`, `btt_rtl`; it selects one between the preset sequences. More on this
+      [below](#preset-sequences)
+    - a function: it takes the fading text as argument and returns an array containing the
+      characters indexes
+  - **step**: the *step* is the action of the character replacement. These are the available
+    options:
+    - **duration**: the duration of each character replacement in milliseconds. Default is 10.
+    - **threads**: the amount of character replacements for each step. Default is 1.
 
 <!-- Markdown list clearing hack -->
 
     TextFade = (@$element, @action, options) ->
-      $                   = jQuery
-      BLANK_TEXT_REGEX    = /[^\n]/g
-      LINES_SPLIT_REGEX   = /.+\n?|\n/g
-      SEQUENCES           =
+      $                 = jQuery
+      BLANK_TEXT_REGEX  = /[^\n]/g
+      LINES_SPLIT_REGEX = /.+\n?|\n/g
+      SEQUENCES         =
         'random'  : (text) -> shuffle times text.length
         'ltr_ttb' : (text) -> times text.length
         'ltr_btt' : (text) -> flatten (textToSequences text).reverse()
@@ -103,10 +105,11 @@ fade-in effect.
         sequences
 
       defaultOptions = ->
-        'milliseconds' : 1
-        'sequence'     : 'random'
-        'text'         : null
-        'threads'      : 1
+        'sequence' : 'random'
+        'text'     : null
+        'step'     :
+          'duration' : 10
+          'threads'  : 1
 
       @_trigger = (event_type, extraParameters) ->
         extraParameters ?= []
@@ -114,8 +117,7 @@ fade-in effect.
         @$element.trigger "#{event_type}.textFade#{capitalize(@action)}", extraParameters
         @$element.trigger "#{event_type}.textFade", extraParameters.unshift(@action)
 
-      @_replace = (sequence) ->
-        index    = sequence.shift()
+      @_replace = (index) ->
         text     = @$element.text()
         prevChar = @begText.charAt index
         nextChar = @endText.charAt index
@@ -124,15 +126,19 @@ fade-in effect.
 
         @$element.text "#{text.substr 0, index}#{nextChar}#{text.substr index+nextChar.length}"
 
-      @_step = (sequence) ->
-        times @options.threads, () =>
-          if sequence.length is 0
-            clearInterval @_interval
-            @_trigger 'complete'
-            return
-          @_replace sequence
+      @_stop = () ->
+        clearInterval @_interval
+        @_trigger 'stop'
 
-      @options = $.extend defaultOptions(), options
+      @_step = (sequence) ->
+        times @options.step.threads, () =>
+          return if sequence.length is 0
+
+          @_replace sequence.shift()
+
+        @_stop() if sequence.length is 0
+
+      @options = $.extend true, defaultOptions(), options
 
       text = @options.text ? @$element.text()
 
@@ -162,7 +168,7 @@ fade-in effect.
 
       @_interval = setInterval =>
         @_step sequenceClone
-      , @options.milliseconds
+      , @options.step.duration
 
       @
 
