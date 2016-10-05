@@ -11,7 +11,7 @@ module.exports = (grunt) ->
     # -> uglifyjs lib/jquery-textfade.js -o lib/jquery-textfade.min.js -m -c --comments '/^!/'
     uglify:
       options:
-        compress:         true
+        compress:         {}
         mangle:           true
         preserveComments: (_, comment) -> /^!/.test comment.value
       minify:
