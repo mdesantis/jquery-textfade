@@ -2,6 +2,7 @@
   "name"           : "jquery-textfade",
   "version"        : "1.0.0",
   "description"    : "jQuery plugin for text fading effects",
+  "homepage"       : "http://mdesantis.github.io/jquery-textfade",
   "license"        : "MIT",
   "readmeFilename" : "README.md",
   "author"         : {
@@ -9,12 +10,9 @@
     "email" : "desantis.maurizio@gmail.com"
   },
 
-  "main": "lib/jquery-textfade.js",
+  "main": "dist/jquery-textfade.js",
 
-  "directories": {
-    "example" : "example",
-    "lib"     : "lib"
-  },
+  "files": "dist",
 
   "scripts": {
     "prepublish": "grunt prepublish"

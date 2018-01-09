@@ -2,23 +2,23 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
 
-    # -> coffee --compile --output lib src
+    # -> coffee --compile --output dist src
     coffee:
       compile:
         files:
-          'lib/jquery-textfade.js': 'src/jquery-textfade.litcoffee'
+          'dist/jquery-textfade.js': 'src/jquery-textfade.litcoffee'
 
-    # -> uglifyjs lib/jquery-textfade.js -o lib/jquery-textfade.min.js -m -c --comments '/^!/'
+    # -> uglifyjs dist/jquery-textfade.js -o dist/jquery-textfade.min.js -m -c --comments '/^!/'
     uglify:
       options:
-        compress:         true
+        compress:         {}
         mangle:           true
         preserveComments: (_, comment) -> /^!/.test comment.value
       minify:
         files:
-          'lib/jquery-textfade.min.js': 'lib/jquery-textfade.js'
+          'dist/jquery-textfade.min.js': 'dist/jquery-textfade.js'
 
-    # -> coffee --watch --output lib src
+    # -> coffee --watch --output dist src
     watch:
       coffee:
         files: ['src/jquery-textfade.litcoffee']

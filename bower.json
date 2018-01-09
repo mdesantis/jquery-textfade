@@ -6,7 +6,7 @@
     { "name": "Maurizio De Santis", "email": "desantis.maurizio@gmail.com", "homepage": "http://www.mauriziodesantis.it" }
   ],
   "description": "jQuery plugin for text fading effects",
-  "main": "lib/jquery-textfade.js",
+  "main": "dist/jquery-textfade.js",
   "keywords": [
     "jquery",
     "effects",
