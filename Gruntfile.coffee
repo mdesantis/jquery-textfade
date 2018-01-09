@@ -9,14 +9,27 @@ module.exports = (grunt) ->
           'dist/jquery-textfade.js': 'src/jquery-textfade.litcoffee'
 
     # -> uglifyjs dist/jquery-textfade.js -o dist/jquery-textfade.min.js -m -c --comments '/^!/'
+    # uglify:
+    #   options:
+    #     compress:         {}
+    #     mangle:           true
+    #     preserveComments: (_, comment) -> /^!/.test comment.value
+    #   minify:
+    #     files:
+    #       'dist/jquery-textfade.min.js': 'dist/jquery-textfade.js'
+
     uglify:
       options:
-        compress:         {}
-        mangle:           true
-        preserveComments: (_, comment) -> /^!/.test comment.value
-      minify:
+        sourceMap:
+          filename: 'jquery-textfade.js'
+          url: 'jquery-textfade.js.map'
+        output:
+          comments: (_, comment) -> /^!/.test comment.value
+      dist:
         files:
           'dist/jquery-textfade.min.js': 'dist/jquery-textfade.js'
+
+
 
     # -> coffee --watch --output dist src
     watch:
