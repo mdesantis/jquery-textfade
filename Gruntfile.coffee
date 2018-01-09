@@ -41,6 +41,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-uglify'
   grunt.loadNpmTasks 'grunt-contrib-watch'
 
-  grunt.registerTask 'prepublish', ['coffee', 'uglify']
+  grunt.registerTask 'prepare', ['coffee', 'uglify']
 
   null
