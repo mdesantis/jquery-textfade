@@ -1,53 +1,49 @@
 $(document).ready(function() {
   var contents = $('#template').text()
-  
-  // $('#sample1i').on('start.textFade', function(e, action) {
-  //   // console.log(e.type+'.'+e.namespace, e, action)
-  // })
-  // $('#sample1i').on('start.textFadeIn', function(e) {
-  //   // console.log(e.type+'.'+e.namespace, e)
-  // })
-  // $('#sample1i').on('complete.textFade', function(e, action) {
-  //   // console.log(e.type+'.'+e.namespace, e, action)
-  // })
-  // $('#sample1i').on('complete.textFadeIn', function(e) {
-  //   // console.log(e.type+'.'+e.namespace, e)
-  // })
-  // $('#sample1i').on('replace.textFadeIn', function(e, prevChar, nextChar) {
-  //   // console.log(e.type+'.'+e.namespace, e, prevChar, nextChar)
-  //   // console.log("Replacing " + JSON.stringify(prevChar) + " with " + JSON.stringify(nextChar))
-  // })
-  $('#sample01i').textFadeIn({                   'milliseconds': 10                        })
-  $('#sample02i').textFadeIn({ 'text': contents, 'milliseconds': 10                        })
-  $('#sample03i').textFadeIn({ 'text': contents, 'milliseconds': 10                        })
-  $('#sample04i').textFadeIn({ 'text': contents, 'threads':      3                         })
-  $('#sample05i').textFadeIn({ 'text': contents,
-    'milliseconds': 20,
-    'threads': 3
-  })
-  $('#sample06i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_ttb' })
-  $('#sample07i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_btt' })
-  $('#sample08i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_ttb' })
-  $('#sample09i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_btt' })
-  $('#sample10i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'ttb_ltr' })
-  $('#sample11i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'ttb_rtl' })
-  $('#sample12i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'btt_ltr' })
-  $('#sample13i').textFadeIn({ 'text': contents, 'milliseconds': 10,  'sequence': 'btt_rtl' })
 
-  $('#sample01o').textFadeOut({                   'milliseconds': 10                        })
-  $('#sample02o').textFadeOut({ 'text': contents, 'milliseconds': 10                        })
-  $('#sample03o').textFadeOut({ 'text': contents, 'milliseconds': 10                        })
-  $('#sample04o').textFadeOut({ 'text': contents, 'threads':      3                         })
-  $('#sample05o').textFadeOut({ 'text': contents,
-    'milliseconds': 20,
-    'threads': 3
+  $.each(['i', 'o'], function(_, actionId) {
+    for (var i = 1; i <= 14; i++) {
+      var idI    = (i < 10 ? '0' : '')+i
+      var id     = '#test'+idI+actionId
+      var action = (actionId === 'i' ? 'In' : 'Out')
+
+      $(id).on('start.textFade'+action, function(e) {
+        console.log($(e.target).attr('id')+': '+e.namespace+' started')
+      })
+
+      $(id).on('stop.textFade'+action, function(e) {
+        console.log($(e.target).attr('id')+': '+e.namespace+' stopped')
+      })
+    }
   })
-  $('#sample06o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_ttb' })
-  $('#sample07o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'ltr_btt' })
-  $('#sample08o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_ttb' })
-  $('#sample09o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'rtl_btt' })
-  $('#sample10o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'ttb_ltr' })
-  $('#sample11o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'ttb_rtl' })
-  $('#sample12o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'btt_ltr' })
-  $('#sample13o').textFadeOut({ 'text': contents, 'milliseconds': 10,  'sequence': 'btt_rtl' })
+
+  $('#test01i').textFadeIn({                   'steps': { 'duration': 10                }                         })
+  $('#test02i').textFadeIn({ 'text': contents, 'steps': { 'duration': 10                }                         })
+  $('#test03i').textFadeIn({ 'text': contents, 'steps': { 'duration': 20                }                         })
+  $('#test04i').textFadeIn({ 'text': contents, 'steps': {                  'threads': 3 }                         })
+  $('#test05i').textFadeIn({ 'text': contents, 'steps': { 'duration': 100, 'threads': 6 }                         })
+  $('#test06i').textFadeIn({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'ltr_ttb' })
+  $('#test07i').textFadeIn({ 'text': contents, 'steps': { 'duration': 100, 'threads': 6 },  'sequence': 'ltr_ttb' })
+  $('#test08i').textFadeIn({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'ltr_btt' })
+  $('#test09i').textFadeIn({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'rtl_ttb' })
+  $('#test10i').textFadeIn({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'rtl_btt' })
+  $('#test11i').textFadeIn({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'ttb_ltr' })
+  $('#test12i').textFadeIn({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'ttb_rtl' })
+  $('#test13i').textFadeIn({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'btt_ltr' })
+  $('#test14i').textFadeIn({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'btt_rtl' })
+
+  $('#test01o').textFadeOut({                   'steps': { 'duration': 10                }                         })
+  $('#test02o').textFadeOut({ 'text': contents, 'steps': { 'duration': 10                }                         })
+  $('#test03o').textFadeOut({ 'text': contents, 'steps': { 'duration': 20                }                         })
+  $('#test04o').textFadeOut({ 'text': contents, 'steps': {                  'threads': 3 }                         })
+  $('#test05o').textFadeOut({ 'text': contents, 'steps': { 'duration': 100, 'threads': 6 }                         })
+  $('#test06o').textFadeOut({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'ltr_ttb' })
+  $('#test07o').textFadeOut({ 'text': contents, 'steps': { 'duration': 100, 'threads': 6 },  'sequence': 'ltr_ttb' })
+  $('#test08o').textFadeOut({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'ltr_btt' })
+  $('#test09o').textFadeOut({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'rtl_ttb' })
+  $('#test10o').textFadeOut({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'rtl_btt' })
+  $('#test11o').textFadeOut({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'ttb_ltr' })
+  $('#test12o').textFadeOut({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'ttb_rtl' })
+  $('#test13o').textFadeOut({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'btt_ltr' })
+  $('#test14o').textFadeOut({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'btt_rtl' })
 })
