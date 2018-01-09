@@ -19,13 +19,11 @@ module.exports = (grunt) ->
     #       'dist/jquery-textfade.min.js': 'dist/jquery-textfade.js'
 
     uglify:
-      options:
-        sourceMap:
-          filename: 'jquery-textfade.js'
-          url: 'jquery-textfade.min.js.map'
-        output:
-          comments: (_, comment) -> /^!/.test comment.value
       dist:
+        options:
+          sourceMap: true
+          output:
+            comments: (_, comment) -> /^!/.test comment.value
         files:
           'dist/jquery-textfade.min.js': 'dist/jquery-textfade.js'
 
