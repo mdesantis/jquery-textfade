@@ -22,7 +22,7 @@ module.exports = (grunt) ->
       options:
         sourceMap:
           filename: 'jquery-textfade.js'
-          url: 'jquery-textfade.js.map'
+          url: 'jquery-textfade.min.js.map'
         output:
           comments: (_, comment) -> /^!/.test comment.value
       dist:
