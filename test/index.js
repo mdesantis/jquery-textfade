@@ -1,21 +1,5 @@
-$(document).ready(function() {
+function startAll() {
   var contents = $('#template').text()
-
-  $.each(['i', 'o'], function(_, actionId) {
-    for (var i = 1; i <= 14; i++) {
-      var idI    = (i < 10 ? '0' : '')+i
-      var id     = '#test'+idI+actionId
-      var action = (actionId === 'i' ? 'In' : 'Out')
-
-      $(id).on('start.textFade'+action, function(e) {
-        console.log($(e.target).attr('id')+': '+e.namespace+' started')
-      })
-
-      $(id).on('stop.textFade'+action, function(e) {
-        console.log($(e.target).attr('id')+': '+e.namespace+' stopped')
-      })
-    }
-  })
 
   $('#test01i').textFadeIn({                   'steps': { 'duration': 10                }                         })
   $('#test02i').textFadeIn({ 'text': contents, 'steps': { 'duration': 10                }                         })
@@ -46,4 +30,26 @@ $(document).ready(function() {
   $('#test12o').textFadeOut({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'ttb_rtl' })
   $('#test13o').textFadeOut({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'btt_ltr' })
   $('#test14o').textFadeOut({ 'text': contents, 'steps': { 'duration': 10                },  'sequence': 'btt_rtl' })
+}
+
+$(document).ready(function() {
+  $.each(['i', 'o'], function(_, actionId) {
+    for (var i = 1; i <= 14; i++) {
+      var idI    = (i < 10 ? '0' : '')+i
+      var id     = '#test'+idI+actionId
+      var action = (actionId === 'i' ? 'In' : 'Out')
+
+      $(id).on('start.textFade'+action, function(e) {
+        console.log($(e.target).attr('id')+': '+e.namespace+' started')
+      })
+
+      $(id).on('stop.textFade'+action, function(e) {
+        console.log($(e.target).attr('id')+': '+e.namespace+' stopped')
+      })
+    }
+  })
+
+  startAll()
+
+  $('#startall').click(startAll)
 })
