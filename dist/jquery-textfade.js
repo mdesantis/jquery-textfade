@@ -11,10 +11,10 @@ https://github.com/mdesantis/jquery-textfade/LICENSE
 (function() {
   var TextFade;
 
-  TextFade = function($element, action, options) {
-    var $, BLANK_TEXT_REGEXP, LINES_SPLIT_REGEXP, SEQUENCES, blankText, capitalize, defaultOptions, flatten, max, sequenceClone, shuffle, text, textToSequences, times, zip, _ref;
+  TextFade = function($element, action1, options) {
+    var $, BLANK_TEXT_REGEXP, LINES_SPLIT_REGEXP, SEQUENCES, blankText, capitalize, defaultOptions, flatten, max, ref, sequenceClone, shuffle, text, textToSequences, times, zip;
     this.$element = $element;
-    this.action = action;
+    this.action = action1;
     $ = jQuery;
     BLANK_TEXT_REGEXP = /[^\n]/g;
     LINES_SPLIT_REGEXP = /.+\n?|\n/g;
@@ -76,18 +76,18 @@ https://github.com/mdesantis/jquery-textfade/LICENSE
       return a;
     };
     times = function(n, fn) {
-      var i, _results;
+      var i, results;
       i = 0;
       if (fn == null) {
         fn = function(i) {
           return i;
         };
       }
-      _results = [];
+      results = [];
       while (i < n) {
-        _results.push(fn(i++));
+        results.push(fn(i++));
       }
-      return _results;
+      return results;
     };
     zip = function(a) {
       var result;
@@ -95,26 +95,26 @@ https://github.com/mdesantis/jquery-textfade/LICENSE
       times(max(a.map(function(v) {
         return v.length;
       })), function(i) {
-        var v, _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = a.length; _i < _len; _i++) {
-          v = a[_i];
+        var k, len, results, v;
+        results = [];
+        for (k = 0, len = a.length; k < len; k++) {
+          v = a[k];
           if (v[i] != null) {
-            _results.push((result[i] != null ? result[i] : result[i] = []).push(v[i]));
+            results.push((result[i] != null ? result[i] : result[i] = []).push(v[i]));
           } else {
-            _results.push(void 0);
+            results.push(void 0);
           }
         }
-        return _results;
+        return results;
       });
       return result;
     };
     textToSequences = function(text) {
-      var charIndex, line, lineIndex, lines, sequences, _i, _len;
+      var charIndex, k, len, line, lineIndex, lines, sequences;
       sequences = [];
       charIndex = 0;
       lines = text.match(LINES_SPLIT_REGEXP);
-      for (lineIndex = _i = 0, _len = lines.length; _i < _len; lineIndex = ++_i) {
+      for (lineIndex = k = 0, len = lines.length; k < len; lineIndex = ++k) {
         line = lines[lineIndex];
         sequences[lineIndex] = [];
         times(line.length, function() {
@@ -140,8 +140,8 @@ https://github.com/mdesantis/jquery-textfade/LICENSE
           'action': this.action
         }
       ];
-      this.$element.trigger("" + eventName + ".textFade" + (capitalize(this.action)), extraParameters);
-      return this.$element.trigger("" + eventName + ".textFade", extraParameters);
+      this.$element.trigger(eventName + ".textFade" + (capitalize(this.action)), extraParameters);
+      return this.$element.trigger(eventName + ".textFade", extraParameters);
     };
     this._replace = function(index) {
       var nextChar, prevChar, text;
@@ -168,7 +168,7 @@ https://github.com/mdesantis/jquery-textfade/LICENSE
       }
     };
     this.options = $.extend(true, defaultOptions(), options);
-    text = (_ref = this.options.text) != null ? _ref : this.$element.text();
+    text = (ref = this.options.text) != null ? ref : this.$element.text();
     if ($.type(this.options.sequence) === 'string') {
       this.options.sequence = SEQUENCES[this.options.sequence](text);
     } else if ($.isFunction(this.options.sequence)) {
