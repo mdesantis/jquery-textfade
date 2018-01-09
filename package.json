@@ -30,10 +30,10 @@
   },
   "devDependencies": {
     "coffeescript": "~2.1.1",
-    "grunt": "~0.4.0",
-    "grunt-contrib-coffee": "~0.11.0",
-    "grunt-contrib-uglify": "~0.5.0",
-    "grunt-contrib-watch": "~0.6.0",
-    "uglify-js": "~2.4.0"
+    "grunt": "~1.0.1",
+    "grunt-contrib-coffee": "~1.0.0",
+    "grunt-contrib-uglify": "~3.3.0",
+    "grunt-contrib-watch": "~1.0.0",
+    "uglify-js": "~3.3.5"
   }
 }
