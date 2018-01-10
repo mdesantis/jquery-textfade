@@ -18,7 +18,7 @@ npm install jquery-textfade
 ## Documentation
 
 This library is a single file written in [Literate Coffeescript](http://coffeescript.org/#literate),
-so it is autodocumented. You can read it [here](src/jquery-textfade.litcoffee).
+so it is self-documented. You can read it [here](src/jquery-textfade.litcoffee).
 
 ## License
 
