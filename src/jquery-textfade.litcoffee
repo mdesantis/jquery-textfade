@@ -67,7 +67,25 @@ happens to be an object.
 
 ### Examples
 
-TODO
+- Fade out the text "HEY THERE!" one character every second:
+
+```coffeescript
+$('#text').textFadeIn({
+  'text': 'HEY THERE!',
+  'steps': { 'duration': 1000, 'threads': 1 }
+})
+```
+
+- Fade out the text "SEE YA!" three characters every two seconds, in a
+*left to right - top to bottom* order:
+
+```coffeescript
+$('#text').textFadeOut({
+  'text': 'SEE YA!',
+  'sequence': 'ltr_ttb',
+  'steps': { 'duration': 2000, threads: 3 }
+})
+```
 
 ## Source
 
@@ -185,7 +203,7 @@ character of the corresponding line
 
         sequences
 
-Here are the default options
+### Default options
 
       defaultOptions = ->
         'text'     : null
