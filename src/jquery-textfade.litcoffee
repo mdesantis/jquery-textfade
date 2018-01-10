@@ -67,7 +67,7 @@ happens to be an object.
 
 ### Examples
 
-- Fade out the text "HEY THERE!" one character every second:
+- Fade out the text `HEY THERE!` one character every second:
 
 ```coffeescript
 $('#text').textFadeIn({
@@ -76,7 +76,7 @@ $('#text').textFadeIn({
 })
 ```
 
-- Fade out the text "SEE YA!" three characters every two seconds, in a
+- Fade out the text `SEE YA!` three characters every two seconds, in a
 *left to right - top to bottom* order:
 
 ```coffeescript
